@@ -1,7 +1,7 @@
-<?php
+<?PHP
 $safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 
-<?PHP
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System

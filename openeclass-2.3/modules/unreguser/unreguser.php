@@ -34,6 +34,7 @@ $navigation[]= array ("url"=>"../profile/profile.php", "name"=> $langModifProfil
 $tool_content = "";
 //Check for SQLi
 $uid = mysql_real_escape_string(intval($uid));
+$doit = isset($_GET['doit']) ? $_GET['doit'] : '';
 
 // Generate a CSRF token if it doesn't exist
 if (empty($_SESSION['csrf_token'])) {
@@ -44,7 +45,7 @@ if (empty($_SESSION['csrf_token'])) {
 
 if (!isset($doit) or $doit != "yes") {
 	// Validate the CSRF token
-	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+	if (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
         die("CSRF token validation failed.");
     }
 	$tool_content .=  "<table width=99%><tbody>";
@@ -78,6 +79,9 @@ if (!isset($doit) or $doit != "yes") {
 		}
 	}  //endif is admin
 } else {
+	if (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+    }
 	if (isset($uid)) {
 		$tool_content .=  "<table width=99%><tbody>";
 		$tool_content .=  "<tr>";
