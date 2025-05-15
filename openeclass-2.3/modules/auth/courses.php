@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -127,7 +128,7 @@ if (isset($_POST["submit"])) {
 					$tool_content .= "\n        <tr class='odd'>";
 				}
 				$tool_content .= "\n<td>&nbsp;<img src='../../images/arrow_blue.gif' />&nbsp;
-					<a href='$_SERVER[PHP_SELF]?fc=$fac[id]'>" . htmlspecialchars($fac['name']) . "</a> <small><font color='#a33033'>($fac[code])</font></small>";
+					<a href='". $safe_Self ."?fc=$fac[id]'>" . htmlspecialchars($fac['name']) . "</a> <small><font color='#a33033'>($fac[code])</font></small>";
 				$n=db_query("SELECT COUNT(*) FROM cours_faculte WHERE facid='$fac[id]'");
 				$r=mysql_fetch_array($n);
 				$tool_content .= "&nbsp;<small><font color=#a5a5a5>($r[0]  ". ($r[0] == 1? $langAvCours: $langAvCourses) . ")</font><small></td></tr>";
@@ -142,7 +143,7 @@ if (isset($_POST["submit"])) {
 		$numofcourses = getdepnumcourses($fc);
 		// display all the facultes collapsed
 		$tool_content .= collapsed_facultes_horiz($fc);
-		$tool_content .= "\n    <form action='$_SERVER[PHP_SELF]' method='post'>";
+		$tool_content .= "\n    <form action='". $safe_Self ."' method='post'>";
 		if ($numofcourses > 0) {
 			$tool_content .= expanded_faculte($fac, $fc, $uid);
 			$tool_content .= "
@@ -215,7 +216,8 @@ function expanded_faculte($fac_name, $facid, $uid) {
 	}
 
 	$retString .= "<table width='99%' align='left'><tbody>
-                       <tr><td><a name='top'> </a>$langFaculty: <b>$fac_name</b>&nbsp;&nbsp;</td></tr>";
+        <tr><td><a name='top'> </a>$langFaculty: <b>" . htmlspecialchars($fac_name, ENT_QUOTES, 'UTF-8') . "</b>&nbsp;&nbsp;</td></tr>";
+
 
 	// get the different course types available for this faculte
 	$typesresult = db_query("SELECT DISTINCT type FROM cours
@@ -405,7 +407,7 @@ function collapsed_facultes_horiz($fc) {
 
 	global $langListFac, $langSelectFac;
 
-	$retString = "\n   <form name='depform' action='$_SERVER[PHP_SELF]' method='get'>\n";
+	$retString = "\n   <form name='depform' action='". $safe_Self ."' method='get'>\n";
 
 	$retString .= "\n  <div id='operations_container'>\n    <ul id='opslist'>";
 	$retString .=  "\n    <li>$langSelectFac:&nbsp;";

@@ -131,6 +131,14 @@ $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
 $lastregisteredstuds = $myrow['cnt'];
 
+$safe_prof_request_msg = htmlspecialchars($prof_request_msg, ENT_QUOTES, 'UTF-8');
+$safe_last_course_info = htmlspecialchars($last_course_info, ENT_QUOTES, 'UTF-8');
+$safe_last_prof_info = htmlspecialchars($last_prof_info, ENT_QUOTES, 'UTF-8');
+//$safe_fac_name = htmlspecialchars($fac_name, ENT_QUOTES, 'UTF-8');
+$safe_last_stud_info = htmlspecialchars($last_stud_info, ENT_QUOTES, 'UTF-8');
+//$safe_lastadminlogin = htmlspecialchars($lastadminlogin, ENT_QUOTES, 'UTF-8');
+$safe_lastregisteredprofs = htmlspecialchars($lastregisteredprofs, ENT_QUOTES, 'UTF-8');
+$safe_lastregisteredstuds = htmlspecialchars($lastregisteredstuds, ENT_QUOTES, 'UTF-8');
 
 $tool_content .= "
     <table width=\"75%\" class=\"Smart\" align=\"center\" >
@@ -141,26 +149,26 @@ $tool_content .= "
     </tr>
     <tr class=\"odd\">
       <th class=\"left\" style=\"border-left: 1px solid #edecdf;\">$langOpenRequests:</th>
-      <td>".$prof_request_msg."</td>
+      <td>". strip_tags($safe_prof_request_msg)."</td>
     </tr>
     <tr class=\"odd\">
       <th class=\"left\" style=\"border-left: 1px solid #edecdf;\">$langLastLesson</th>
-      <td>$last_course_info</td>
+      <td>". strip_tags($safe_last_course_info) ."</td>
     </tr>
     <tr class=\"odd\">
       <th class=\"left\" style=\"border-left: 1px solid #edecdf;\">$langLastProf</th>
-      <td>$last_prof_info</td>
+      <td> ". strip_tags($safe_last_prof_info) ."</td>
     </tr>
     <tr class=\"odd\">
       <th class=\"left\" style=\"border-left: 1px solid #edecdf;\">$langLastStud</th>
-      <td>$last_stud_info</td>
+      <td>$last_stud_info)</td>
     </tr>
     <tr class=\"odd\">
       <th class=\"left\" style=\"border-left: 1px solid #edecdf; border-bottom: 1px solid #edecdf;\">$langAfterLastLoginInfo</th>
       <td>$langAfterLastLogin
         <ul>
-          <li><b>".$lastregisteredprofs."</b> $langTeachers</li>
-          <li><b>".$lastregisteredstuds."</b> $langUsersS </li>
+          <li><b>$lastregisteredprofs</b> $langTeachers</li>
+          <li><b>$lastregisteredstuds</b> $langUsersS </li>
         </ul>
       </td>
     </tr>

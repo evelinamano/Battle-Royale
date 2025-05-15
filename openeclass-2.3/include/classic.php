@@ -101,6 +101,11 @@ if ($result2 and mysql_num_rows($result2) > 0) {
 		$cours_id_map[$code] = $mycours['cours_id'];
                 $profs[$code] = $mycours['profs'];
                 $titles[$code] = $mycours['title'];
+                $safe_title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+                $safe_fake_code = htmlspecialchars($mycours['fake_code'], ENT_QUOTES, 'UTF-8');
+                $safe_profs = htmlspecialchars($profs[$code], ENT_QUOTES, 'UTF-8');
+                $safe_titles = htmlspecialchars($titles[$code], ENT_QUOTES, 'UTF-8');
+
 		if ($k%2==0) {
 			$tool_content .= "<tr>";
 		} else {
@@ -116,9 +121,9 @@ if ($result2 and mysql_num_rows($result2) > 0) {
                         $manage_title = $langUnregCourse;
                 }
 		$tool_content .="<td width='1'><img src='${urlAppend}/template/classic/img/arrow_grey.gif' title='* ' /></td>";
-		$tool_content .= "\n<td><a href='${urlServer}courses/$code' class='CourseLink'>$title</a>
-			<font color='#a33033'> ($mycours[fake_code])</font></td>";
-		$tool_content .= "\n<td><small>$mycours[profs]</small></td>";
+		$tool_content .= "\n<td><a href='${urlServer}courses/$code' class='CourseLink'>$safe_title</a>
+			<font color='#a33033'> ($safe_fake_code)</font></td>";
+		$tool_content .= "\n<td><small>$safe_profs</small></td>";
 		$tool_content .= "\n<td align='center'>
 			<a href='$manage_link'><img src='$manage_icon' title='$manage_title' /></a></td>";
 		$tool_content .= "\n    </tr>";
@@ -171,7 +176,7 @@ if (count($status) > 0) {
                                         $tool_content .= "<td width='1' class='square_bullet2'>&nbsp;</td>" .
                                                          "<td class='announce_pos'><b>$ann[title]</b> " .
                                                          nice_format($ann['temps']) .
-                                                         "&nbsp;&nbsp;&nbsp;&nbsp;($langCourse: <b>{$titles[$code]}</b> | $langTutor: <b>{$profs[$code]}</b>)<br />$content</td>\n</tr>";
+                                                         "&nbsp;&nbsp;&nbsp;&nbsp;($langCourse: <b>{$safe_titles}</b> | $langTutor: <b>{$safe_profs}</b>)<br />$content</td>\n</tr>";
                                         $la++;
                                 }
                         }

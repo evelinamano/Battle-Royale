@@ -62,12 +62,13 @@ $icons = array(2 => "<img src='../../template/classic/img/OpenCourse.gif'   alt=
     0 => "<img src='../../template/classic/img/ClosedCourse.gif' alt='" . $m['legclosed'] . "' title='" . $m['legclosed'] . "' width='16' height='16'>"
     );
 
-$tool_content .= "
-  <table width=99% class='framed'>
-  <tbody>
-  <tr>
-    <td><a name='top'>&nbsp;</a>$langFaculty:&nbsp;<b>$fac</b></td>
-    <td><div align='right'>";
+    $tool_content .= "
+    <table width='99%' class='framed'>
+    <tbody>
+    <tr>
+      <td><a name='top'>&nbsp;</a>$langFaculty:&nbsp;<b>(" . htmlspecialchars($fac['name']) . ")</b></td>
+      <td><div align='right'>";
+  
 // get the different course types available for this faculte
 $typesresult = db_query("SELECT DISTINCT cours.type types FROM cours WHERE cours.faculteid = $fc ORDER BY cours.type");
 // count the number of different types
@@ -153,10 +154,16 @@ foreach (array("pre" => $langpres,
 
     $k = 0;
     while ($mycours = mysql_fetch_array($result)) {
+        
+        $courseCode = htmlspecialchars($mycours['k'], ENT_QUOTES, 'UTF-8');
+        $courseName = htmlspecialchars($mycours['i'], ENT_QUOTES, 'UTF-8');
+        $courseFaculty = htmlspecialchars($mycours['c'], ENT_QUOTES, 'UTF-8');
+        $courseTeacher = htmlspecialchars($mycours['t'], ENT_QUOTES, 'UTF-8'); 
+       
         if ($mycours['visible'] == 2) {
-            $codelink = "<a href='../../courses/$mycours[k]/'>$mycours[i]</a>&nbsp;<small>(" . $mycours['c'] . ")</small>";
+            $codelink = "<a href='../../courses/$courseCode/'>$courseName</a>&nbsp;<small>(" . $courseFaculty . ")</small>";
         } else {
-            $codelink = "$mycours[i]&nbsp;<small>(" . $mycours['c'] . ")</small>";
+            $codelink = "$courseName&nbsp;<small>(" . $courseFaculty . ")</small>";
         }
 
         if ($k % 2 == 0) {
@@ -166,7 +173,7 @@ foreach (array("pre" => $langpres,
         }
         $tool_content .= "\n          <td width='1%'><img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>";
         $tool_content .= "\n          <td>" . $codelink . "</td>";
-        $tool_content .= "\n          <td><small>$mycours[t]</small></td>";
+        $tool_content .= "\n          <td><small>$courseTeacher</small></td>";
         $tool_content .= "\n          <td align='center'>";
         // show the necessary access icon
         foreach ($icons as $visible => $image) {

@@ -84,30 +84,61 @@ if (isset($_GET['all'])) {
         $paging = true;
 }
 
-//SQLi - Parameters check
-$topic = mysql_real_escape_string(intval($topic));
-$forum = mysql_real_escape_string(intval($forum));
 
-$sql = "SELECT f.forum_type, f.forum_name
-	FROM forums f, topics t 
-	WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic) AND (t.forum_id = f.forum_id)";
-if (!$result = db_query($sql, $currentCourseID)) {
-	$tool_content .= $langErrorConnectForumDatabase;
-	draw($tool_content, 2);
-	exit();
-}
-if (!$myrow = mysql_fetch_array($result)) {
+//$sql = "SELECT f.forum_type, f.forum_name
+//	FROM forums f, topics t 
+//	WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic) AND (t.forum_id = f.forum_id)";
+//if (!$result = db_query($sql, $currentCourseID)) {
+//	$tool_content .= $langErrorConnectForumDatabase;
+//	draw($tool_content, 2);
+//	exit();
+//}
+//if (!$myrow = mysql_fetch_array($result)) {
+//	$tool_content .= $langErrorTopicSelect;
+//	draw($tool_content, 2);
+//	exit();
+//}
+$forum = intval($forum);
+$topic = intval($topic);
+
+$stmt1 = $mysqli->prepare("
+	SELECT f.forum_type, f.forum_name
+	FROM forums f
+	JOIN topics t ON t.forum_id = f.forum_id
+	WHERE f.forum_id = ? AND t.topic_id = ?
+");
+
+$stmt1->bind_param('ii',$forum, $topic);
+$stmt1->execute();
+$r1 = $stmt1->get_result();
+
+if (!$myrow = mysqli_fetch_array($result)) {
 	$tool_content .= $langErrorTopicSelect;
 	draw($tool_content, 2);
 	exit();
 }
+
 $forum_name = own_stripslashes($myrow["forum_name"]);
 
-$sql = "SELECT topic_title, topic_status
-	FROM topics 
-	WHERE topic_id = '$topic'";
+//$sql = "SELECT topic_title, topic_status
+//	FROM topics 
+//	WHERE topic_id = '$topic'";
+//
+//$total = get_total_posts($topic, $currentCourseID, "topic");
 
-$total = get_total_posts($topic, $currentCourseID, "topic");
+
+$stmt2 = $mysqli->prepare("
+	SELECT topic_title, topic_status 
+	FROM topics 
+	WHERE topic_id = ?");
+$stmt2 = bind_param('i', $topic);
+$stmt2-> execute();
+$r2 = $stmt2->get_result();
+
+$myrow = $r2->fetch_assoc();
+$topic_subject = own_stripslashes($myrow["topic_title"]);
+$lock_state = $myrow["topic_status"];
+
 
 if ($paging and $total > $posts_per_page) {
 	$times = 0;
@@ -117,10 +148,10 @@ if ($paging and $total > $posts_per_page) {
 	$pages = $times;
 }
 
-$result = db_query($sql, $currentCourseID);
-$myrow = mysql_fetch_array($result);
-$topic_subject = own_stripslashes($myrow["topic_title"]);
-$lock_state = $myrow["topic_status"];
+//$result = db_query($sql, $currentCourseID);
+//$myrow = mysql_fetch_array($result);
+//$topic_subject = own_stripslashes($myrow["topic_title"]);
+//$lock_state = $myrow["topic_status"];
 
 if (!add_units_navigation(TRUE)) {
 	$navigation[]= array ("url"=>"index.php", "name"=> $langForums);
@@ -235,7 +266,7 @@ if (!$result = db_query($sql, $currentCourseID)) {
 	draw($tool_content, 2, 'phpbb');
 	exit();
 }
-$myrow = mysql_fetch_array($result);
+$myrow = mysqli_fetch_array($result);
 $count = 0;
 do {
 	if(!($count % 2))
@@ -268,7 +299,7 @@ do {
 	}
 	$tool_content .= "</div></td></tr>";
 	$count++;
-} while($myrow = mysql_fetch_array($result));
+} while($myrow = mysqli_fetch_array($result));
 
 $sql = "UPDATE topics SET topic_views = topic_views + 1 WHERE topic_id = '$topic'";
 db_query($sql, $currentCourseID);

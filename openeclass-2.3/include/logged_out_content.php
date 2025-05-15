@@ -76,17 +76,17 @@ if (mysql_num_rows($result) > 0) {
 	$numOfAnnouncements = count($announceArr);
 
 	for($i=0; $i < $numOfAnnouncements; $i++) {
-        $tool_content .= "<tr><td colspan='2'>
-        <img style='border:0px;' src='${urlAppend}/template/classic/img/arrow_grey.gif' alt='' />
-        <b>".htmlspecialchars($announceArr[$i][1])."</b>
-        (".greek_format($announceArr[$i][0]).")
-        <p>
-        ".htmlspecialchars($announceArr[$i][2])."<br />
-        <i>".htmlspecialchars($announceArr[$i][3])."</i></p>
-        </td>
-        </tr>";
-    }
-    $tool_content .= "</tbody></table>";
+		$tool_content .= "<tr><td colspan='2'>
+		<img style='border:0px;' src='${urlAppend}/template/classic/img/arrow_grey.gif' alt='' />
+		<b>".htmlspecialchars($announceArr[$i][1])."</b>
+		(".greek_format($announceArr[$i][0]).")
+		<p>
+		".htmlspecialchars($announceArr[$i][2])."<br />
+		<i>".htmlspecialchars($announceArr[$i][3])."</i></p>
+		</td>
+		</tr>";
+	}
+	$tool_content .= "</tbody></table>";
 }
 
 $shibactive = mysql_fetch_array(db_query("SELECT auth_default FROM auth WHERE auth_name='shibboleth'"));

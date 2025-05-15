@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -66,27 +67,27 @@ $tool_content .= "<table class='FormData' width='99%' align='left'>
 	<tbody>
 	<tr><td colspan='2'>&nbsp;</td></tr>
 	<tr><th width='220'>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=login'>$langNbLogin</a></td>
+	<td><a href='". $safe_Self ."?stats=login'>$langNbLogin</a></td>
 	</tr>
 	<tr><th>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=users'>$langUsers</a></td>
+	<td><a href='". $safe_Self ."?stats=users'>$langUsers</a></td>
 	</tr>
 	<tr><th>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=percourse'>$langUsersPerCourse</a></td>
+	<td><a href='". $safe_Self ."?stats=percourse'>$langUsersPerCourse</a></td>
 	</tr>
 	<tr>
 	<th>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=cours'>$langStatCour</a></td>
+	<td><a href='". $safe_Self ."?stats=cours'>$langStatCour</a></td>
 	</tr>
 	<tr><th>&nbsp;</th>
 	<td>
-	<a href='$_SERVER[PHP_SELF]?stats=musers'>$langMultipleUsers</a></td>
+	<a href='". $safe_Self ."?stats=musers'>$langMultipleUsers</a></td>
 	</tr>
 	<tr><th>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=memail'>$langMultipleAddr e-mail</a></td>
+	<td><a href='". $safe_Self ."?stats=memail'>$langMultipleAddr e-mail</a></td>
 	</tr>
 	<tr><th>&nbsp;</th>
-	<td><a href='$_SERVER[PHP_SELF]?stats=mlogins'>$langMultiplePairs LOGIN - PASS</a></td>
+	<td><a href='". $safe_Self ."?stats=mlogins'>$langMultiplePairs LOGIN - PASS</a></td>
 	</tr>
 	</tbody></table>";
 

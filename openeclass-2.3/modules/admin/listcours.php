@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -124,7 +125,7 @@ else {
 
 	if ($fulllistsize > $listsize ) {
 		// Display navigation in pages
-		$tool_content .= show_paging($limit, $listsize, $fulllistsize, "$_SERVER[PHP_SELF]");
+		$tool_content .= show_paging($limit, $listsize, $fulllistsize, "$safe_self");
 	}
 }
 
@@ -192,7 +193,7 @@ if (isset($search) && $search=="yes") {
 	$tool_content .= "<br /><p align='right'><a href='searchcours.php'>".$langReturnSearch."</a></p>";
 } elseif ($fulllistsize > $listsize) {
 	// Display navigation in pages
-	$tool_content .= show_paging($limit, $listsize, $fulllistsize, "$_SERVER[PHP_SELF]");
+	$tool_content .= show_paging($limit, $listsize, $fulllistsize, "$safe_self");
 }
 // Display link to index.php
 $tool_content .= "<br /><p align='right'><a href='index.php'>".$langBack."</a></p>";

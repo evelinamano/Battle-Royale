@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -99,7 +100,7 @@ $langEmail : $emailhelpdesk
 } else {
         // Display form to administrator
         $tool_content .= "
-<form action='$_SERVER[PHP_SELF]' method='post'>
+<form action='". $safe_Self ."' method='post'>
   <table class='FormData'>
   <tbody>
   <tr>

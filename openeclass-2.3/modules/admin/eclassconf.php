@@ -1,4 +1,8 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -159,7 +163,7 @@ else {
 	}
 	// Constract the form
 	$tool_content .= "
-    <form action=\"".$_SERVER['PHP_SELF']."\" method=\"post\">";
+    <form action=\"".$safe_self."\" method=\"post\">";
 	$tool_content .= "
 
   <table class=\"FormData\" width=\"99%\" align=\"left\">

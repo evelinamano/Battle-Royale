@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
   
 /*========================================================================
 *   Open eClass 2.3
@@ -105,7 +108,7 @@
             $attr = ' href="'.$str.'"';
             if ( $this->wiki->pageExists( $str ) )
                 {
-                return "<a href=\"".$_SERVER['PHP_SELF']
+                return "<a href=\"".$safe_self
                     ."?action=show&amp;title=".rawurlencode($str )
                     . "&amp;wikiId=" . $this->wiki->getWikiId()
                     . "\" class=\"wikiShow\">"
@@ -115,7 +118,7 @@
             }
             else
             {
-                return "<a href=\"".$_SERVER['PHP_SELF']
+                return "<a href=\"".$safe_self
                     . "?action=edit&amp;title=" . rawurlencode($str )
                     . "&amp;wikiId=" . $this->wiki->getWikiId()
                     . "\" class=\"wikiEdit\">"
@@ -259,7 +262,7 @@
              
             if ($this->wiki->pageExists( $pageName ) )
             {
-                return ' href="' . $_SERVER['PHP_SELF']
+                return ' href="' . $safe_self
                     . '?action=show&amp;title=' . rawurlencode($pageName )
                     . '&amp;wikiId=' . $this->wiki->getWikiId()
                     . '" class="wikiShow"'
@@ -267,7 +270,7 @@
             }
             else
             {
-                return ' href="' . $_SERVER['PHP_SELF']
+                return ' href="' . $safe_self
                     . '?action=edit&amp;title=' . rawurlencode($pageName )
                     . '&amp;wikiId=' . $this->wiki->getWikiId()
                     . '" class="wikiEdit"'

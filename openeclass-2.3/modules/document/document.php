@@ -1,4 +1,8 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -683,7 +687,7 @@ if (mysql_num_rows($sql) == 0) {
                         $this_reverse = $reverse;
                         $indicator = '';
                 }
-                return '<a href=\'' . $_SERVER['PHP_SELF'] . '?openDir=' . $path .
+                return '<a href=\'' . $safe_self . '?openDir=' . $path .
                        '&amp;sort=' . $this_sort . ($this_reverse? '&amp;rev=1': '') .
                        '\'>' . $label . $indicator . '</a>';
         }
@@ -691,7 +695,7 @@ if (mysql_num_rows($sql) == 0) {
 	/*** go to parent directory ***/
         if ($curDirName) // if the $curDirName is empty, we're in the root point and we can't go to a parent dir
         {
-                $parentlink = $_SERVER['PHP_SELF'] . '?openDir=' . $cmdParentDir;
+                $parentlink = $safe_self . '?openDir=' . $cmdParentDir;
                 $tool_content .=  "<a href='$parentlink'>$langUp</a> <a href='$parentlink'><img src='../../template/classic/img/parent.gif' height='20' width='20' /></a>";
         }
         $tool_content .= "</div></th>";
@@ -736,9 +740,9 @@ if (mysql_num_rows($sql) == 0) {
                                 $file_url = file_url($cmdDirName, $entry['filename']);
                                 $link_extra = " title='$langSave' target='_blank'";
                                 if (empty($entry['title'])) {
-                                        $link_text = $entry['filename'];
+                                        $link_text = htmlspecialchars($entry['filename']);
                                 } else {
-                                        $link_text = $entry['title'];
+                                        $link_text = htmlspecialchars($entry['title']);
                                 }
                                 if ($entry['copyrighted']) {
                                         $link_text .= " <img src='./img/copyrighted.jpg' />";

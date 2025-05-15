@@ -82,7 +82,7 @@ if (isset($persoIsActive)) {
 $warning = '';
 if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 	include 'include/shib_login.php';
-} else { // normal authentication
+} else { // normal authentication   prevents sql injections
 	if (isset($_POST['uname'])) {
 		$uname = escapeSimple(preg_replace('/ +/', ' ', trim($_POST['uname'])));
 	} else {
@@ -97,7 +97,7 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 	if(!empty($submit)) {
 		unset($uid);
 		$sqlLogin= "SELECT user_id, nom, username, password, prenom, statut, email, perso, lang
-			FROM user WHERE username='".$uname."'";
+			FROM user WHERE username='".$uname."'"; // potential weakness
 		$result = mysql_query($sqlLogin);
 		$check_passwords = array("pop3","imap","ldap","db");
 		$warning = "";

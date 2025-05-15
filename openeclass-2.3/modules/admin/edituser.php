@@ -1,4 +1,5 @@
 <? session_start();
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -46,6 +47,7 @@ include 'admin.inc.php';
 include '../auth/auth.inc.php';
 include '../../include/jscalendar/calendar.php';
 
+session_start();
 if (isset($_GET['u']) or isset($_POST['u']))
 $_SESSION['u_tmp']=$u;
 if(!isset($_GET['u']) or !isset($_POST['u']))
@@ -57,6 +59,10 @@ $lang_editor = $lang_jscalendar = langname_to_code($language);
 
 $jscalendar = new DHTML_Calendar($urlServer.'include/jscalendar/', $lang_jscalendar, 'calendar-blue2', false);
 $head_content .= $jscalendar->get_load_files_code();
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token']  = md5(uniqid(mt_rand(), true));
+}
 
 // Initialise $tool_content
 $navigation[] = array("url" => "index.php", "name" => $langAdmin);
@@ -85,7 +91,7 @@ if((!empty($u)) && ctype_digit($u) )	// validate the user id
     </ul>
   </div>";
 		$tool_content .= "
-<form name='edituser' method='post' action='$_SERVER[PHP_SELF]'>
+<form name='edituser' method='post' action='". $safe_Self ."'>
   <table class='FormData' width='99%' align='left'>
   <tbody>
   <tr>
@@ -205,6 +211,7 @@ $tool_content .= "
       <input type='hidden' name='u' value='$u' />
       <input type='hidden' name='u_submitted' value='1' />
       <input type='hidden' name='registered_at' value='".$info['registered_at']."' />
+	  <input type='hidden' name='csrf_token' value=".$_SESSION['csrf_token'] .">
       <input type='submit' name='submit_edituser' value='$langModify' />
     </td>
   </tr>
@@ -288,6 +295,11 @@ $tool_content .= "
 		}
 	}  else { // if the form was submitted then update user
 
+		// Validate the CSRF token
+		if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+			die("CSRF token validation failed.");
+		}
+
 		// get the variables from the form and initialize them
 		$fname = isset($_POST['fname'])?$_POST['fname']:'';
 		$lname = isset($_POST['lname'])?$_POST['lname']:'';
@@ -321,14 +333,14 @@ if (mysql_num_rows($username_check) > 1) {
   if (empty($fname) OR empty($lname) OR empty($username)) {
 	$tool_content .= "<table width='99%'><tbody><tr>
         <td class='caution' height='60'><p>$langEmptyFields</p>
-	<p><a href='$_SERVER[PHP_SELF]'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
+	<p><a href='". $safe_Self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
 	draw($tool_content, 3, ' ', $head_content);
 	    exit();
 	}
  	 elseif(isset($user_exist) AND $user_exist == TRUE) {
 		$tool_content .= "<table width='99%'><tbody><tr>
           	<td class='caution' height='60'><p>$langUserFree</p>
-		<p><a href='$_SERVER[PHP_SELF]'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
+		<p><a href='". $safe_Self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
 		draw($tool_content, 3, ' ', $head_content);
 	    exit();
   }

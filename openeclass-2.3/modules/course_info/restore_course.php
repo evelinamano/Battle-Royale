@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -118,7 +119,7 @@ elseif (isset($_POST['pathOf4path'])) {
 	<tbody><tr><th>&nbsp;</th><td><b>$langFirstMethod</b></td></tr>
 	<tr><th>&nbsp;</th><td>$langRequest1
 	<br /><br />
-	<form action='".$_SERVER['PHP_SELF']."' method='post' name='sendZip' enctype='multipart/form-data'>
+	<form action='".$safe_self."' method='post' name='sendZip' enctype='multipart/form-data'>
 	<input type='file' name='archiveZipped' />
 	<input type='submit' name='send_archive' value='".$langSend."' />
 	</form>
@@ -132,7 +133,7 @@ elseif (isset($_POST['pathOf4path'])) {
 	<th>&nbsp;</th>
 	<td>$langRequest2
 	<br /><br />
-	<form action='".$_SERVER['PHP_SELF']."' method='post'>
+	<form action='".$safe_self."' method='post'>
 	<input type='text' name='pathToArchive' />
 	<input type='submit' name='send_path' value='".$langSend."' />
 	</form>
@@ -458,6 +459,8 @@ function create_course($code, $lang, $title, $desc, $fac, $vis, $prof, $type) {
 function course_index($dir, $code) {
 	$f = fopen("$dir/index.php", "w");
 	fputs($f, "<?php
+
+
 session_start();
 \$dbname=\"$code\";
 session_register(\"dbname\");
@@ -547,7 +550,7 @@ function unpack_zip_show_files($zipfile)
 			continue;
 		if (is_dir($dirnameCourse.$entries))
 			$retString .= "<li>".$entries."<br />".$langLesFiles."
-			<form action='".$_SERVER['PHP_SELF']."' method='post' name='restoreThis'>
+			<form action='".$safe_self."' method='post' name='restoreThis'>
 			<ol>";
 			$dirnameArchive = realpath("$destdir/archive/$entries/");
 			if($dirnameArchive[strlen($dirnameArchive)-1]!='/')

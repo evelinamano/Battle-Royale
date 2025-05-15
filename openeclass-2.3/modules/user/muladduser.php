@@ -1,3 +1,6 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 <?
 /*========================================================================
 *   Open eClass 2.3
@@ -39,7 +42,7 @@ $tool_content = "";
 if($is_adminOfCourse) {
 
     $tool_content .= "
-    <form method=\"post\" action=\"".$_SERVER['PHP_SELF']."\" enctype=\"multipart/form-data\">";
+    <form method=\"post\" action=\"".$safe_self."\" enctype=\"multipart/form-data\">";
 	$tool_content .= <<<tCont2
 
     <table width="99%" class="FormData">

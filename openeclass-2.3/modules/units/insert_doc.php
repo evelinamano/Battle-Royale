@@ -1,3 +1,6 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 <?
 /*========================================================================
  *   Open eClass 2.3
@@ -69,7 +72,7 @@ function display_docs()
                                                                    WHERE path = '$path'"));
 			$parentpath = dirname($path);
                         $dirname = "/".htmlspecialchars($dirname);
-                        $parentlink = $_SERVER['PHP_SELF'] . "?type=doc&amp;id=$id&amp;path=" . $parentpath;
+                        $parentlink = $safe_self . "?type=doc&amp;id=$id&amp;path=" . $parentpath;
                         $parenthtml = "<th class='right'><a href='$parentlink'>$langUp</a> <a href='$parentlink'>" .
                                       "<img src='../../template/classic/img/parent.gif' height='20' width='20' /></a></th>";
                         $colspan = 4;

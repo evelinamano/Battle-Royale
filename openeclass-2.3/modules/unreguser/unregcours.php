@@ -26,31 +26,40 @@
 
 $require_login = TRUE;
 include '../../include/baseTheme.php';
-
+session_start();
 $nameTools = $langUnregCours;
 
 $local_style = 'h3 { font-size: 10pt;} li { font-size: 10pt;} ';
 
 $tool_content = "";
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token']  = md5(uniqid(mt_rand(), true));
+	
 
+}
 if (isset($_GET['cid']))
   $_SESSION['cid_tmp']=$cid;
 if(!isset($_GET['cid']))
   $cid=$_SESSION['cid_tmp'];
 
 if (!isset($doit) or $doit != "yes") {
-
-         $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
-         $unregToken = $_SESSION['token'];
+        // Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+        }
+	$tool_content .=  "<table width=99%><tbody>";
+	$tool_content .=  "<tr><td class=\"caution\">";
 
   $tool_content .= "
     <table width='40%'>
     <tbody>
     <tr>
       <td class='caution_NoBorder' height='60' colspan='2'>
-      	<p>$langConfirmUnregCours:</p><p> <em>".course_code_to_title($cid)."</em>&nbsp;? </p>
+      	<p>$langConfirmUnregCours:</p><p> <em>".htmlspecialchars(course_code_to_title($cid))."</em>&nbsp;? </p>
 	<ul class='listBullet'>
 	<li>$langYes: 
+        <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
 	<a href='$_SERVER[PHP_SELF]?u=$uid&amp;cid=$cid&amp;doit=yes' class=mainpage>$langUnregCours</a>
 	</li>
 	<li>$langNo: <a href='../../index.php' class=mainpage>$langBack</a>
@@ -61,35 +70,6 @@ if (!isset($doit) or $doit != "yes") {
     </table>";
 
 } else {
-
-        /*if (empty($_GET['token']) || $_SESSION['token'] !== $_GET['token'] ) {
-                header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-                exit();
-        }
-        unset($_SESSION['token']);
-
-        if (isset($uid) and $uid==$_SESSION['uid']) {
-        $mysqli = new mysqli($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword'], $mysqlMainDb);
-        if ($mysqli->connect_error) {
-            die("Connection failed: " . $mysqli->connect_error);
-        }
-        if (!$mysqli->set_charset("utf8")) {
-            printf("Error loading character set utf8: %s\n", $mysqli->error);
-            exit();
-        }
-        $stmt = $mysqli->prepare("DELETE from cours_user WHERE cours_id = (SELECT cours_id FROM cours WHERE code = ?) AND user_id= ? ");
-        $stmt->bind_param("si", $cid,$uid);
-        $stmt->execute();
-        if ($stmt->affected_rows > 0) {
-                $tool_content .= "<p class='success_small'>$langCoursDelSuccess</p>";
-        } else {
-                $tool_content .= "<p class='caution_small'>$langCoursError</p>";
-        }
-        $stmt->close();
-     }
-    $tool_content .= "<br><br><div align=right><a href='../../index.php' class=mainpage>$langBack</a></div>";
-}*/
-
 if (isset($uid) and $uid==$_SESSION['uid']) {
             db_query("DELETE from cours_user WHERE cours_id = (SELECT cours_id FROM cours WHERE code = " . quote($cid) . ") AND user_id='$uid'");
                 if (mysql_affected_rows() > 0) {
@@ -100,8 +80,6 @@ if (isset($uid) and $uid==$_SESSION['uid']) {
          }
         $tool_content .= "<br><br><div align=right><a href='../../index.php' class=mainpage>$langBack</a></div>";
 }
-
-
 
 if (isset($_SESSION['uid'])) {
         draw($tool_content, 1);

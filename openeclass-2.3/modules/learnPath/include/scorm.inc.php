@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -79,7 +82,7 @@ if( isset($learningPath_module[0]['lock'])
 	&& isset($learningPath_module[0]['raw_to_pass']) ) // this module blocks the user if he doesn't complete
 {
 	$tool_content .= "\n\n" . '<hr noshade="noshade" size="1" />' . "\n"
-	.    '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '">' . "\n"
+	.    '<form method="POST" action="' . $safe_self . '">' . "\n"
 	.    '<label for="newRaw">' . $langChangeRaw . '</label>'."\n"
 	.    '<input type="text" value="' . htmlspecialchars($learningPath_module[0]['raw_to_pass']) . '" name="newRaw" id="newRaw" size="3" maxlength="3" /> % ' . "\n"
 	.    '<input type="submit" value="' . $langOk . '" />'."\n"

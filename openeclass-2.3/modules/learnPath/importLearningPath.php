@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 
 /*========================================================================
 *   Open eClass 2.3
@@ -1225,7 +1228,7 @@ else // if method == 'post'
       UPLOAD FORM
      --------------------------------------*/
     $tool_content .= "
-    <form enctype=\"multipart/form-data\" action=\"".$_SERVER['PHP_SELF']."\" method=\"post\">
+    <form enctype=\"multipart/form-data\" action=\"".$safe_self."\" method=\"post\">
     <table width=\"99%\" align=\"left\" class=\"FormData\">
     <tbody>
     <tr>

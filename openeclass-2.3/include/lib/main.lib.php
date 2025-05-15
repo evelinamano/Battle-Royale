@@ -1,4 +1,10 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
+
+
 /*
 =============================================================================
 GUnet eClass 2.0
@@ -796,9 +802,9 @@ function make_clickable_path($dbTable, $path)
 	global $langRoot, $userGroupId;
 
         if (isset($userGroupId)) {
-                $base = $_SERVER['PHP_SELF'] . '?userGroupId=' . $userGroupId . '&amp;';
+                $base = $safe_self . '?userGroupId=' . $userGroupId . '&amp;';
         } else {
-                $base = $_SERVER['PHP_SELF'] . '?';
+                $base = $safe_self . '?';
         }
 
 	$cur = '';
@@ -897,7 +903,7 @@ function display_activation_link($module_id) {
 		WHERE id ='$module_id'", $currentCourseID));
 	$newlien = str_replace("../..","","$v[lien]");
 
-	if (strpos($_SERVER['PHP_SELF'],$newlien) === FALSE) {
+	if (strpos($safe_self,$newlien) === FALSE) {
 		return FALSE;
 	} else {
 		return TRUE;

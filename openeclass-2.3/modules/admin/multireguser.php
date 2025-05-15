@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -112,7 +113,7 @@ if (isset($_POST['submit'])) {
                 $facs[$n['id']] = $n['name'];
         }
         $tool_content .= "$langMultiRegUserInfo
-<form method='post' action='$_SERVER[PHP_SELF]'>
+<form method='post' action='". $safe_Self ."'>
 <table class='FormData'>
 <tr><th>$langMultiRegFields</th>
     <td><input type='text' name='fields' size='50' value='first last id email phone' /></td>
