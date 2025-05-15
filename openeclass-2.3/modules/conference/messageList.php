@@ -1,3 +1,6 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 <?
 /*========================================================================
 *   Open eClass 2.3
@@ -29,7 +32,7 @@ include '../../include/baseTheme.php';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
-<meta http-equiv="refresh" content="30; url=<?= $_SERVER['PHP_SELF'] ?>" />
+<meta http-equiv="refresh" content="30; url=<?= $safe_self ?>" />
 <title>Chat messages</title>
 <style type="text/css">
 span { color: #727266; }
@@ -99,6 +102,7 @@ if (isset($_GET['store']) && $is_adminOfCourse) {
 if (isset($chatLine) and trim($chatLine) != '') {
 	$fchat = fopen($fileChatName,'a');
 	$chatLine = mathfilter($chatLine, 12, '../../courses/mathimg/');
+	$chatLine = htmlspecialchars($chatLine, ENT_QUOTES, 'UTF-8');
 	fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
 	fclose($fchat);
 }

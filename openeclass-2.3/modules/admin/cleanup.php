@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -54,7 +55,7 @@ if (isset($_POST['submit'])) {
     <tr>
       <th width='220'>&nbsp;</th>
       <td>
-         <form method='post' action='$_SERVER[PHP_SELF]'>
+         <form method='post' action='". $safe_Self ."'>
 	     <input type='submit' name='submit' value='$langCleanup'>
          </form>
       </td>

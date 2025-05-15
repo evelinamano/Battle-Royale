@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -96,7 +99,7 @@ else {
     <td><br />".$langCourseDelConfirm2." <em>".htmlspecialchars($_GET['c'])."</em>;<br /><br /><i>".$langNoticeDel."</i><br /><br /></td>
   </tr>";
 	$tool_content .= "  <tr>
-    <td><ul><li><a href=\"".$_SERVER['PHP_SELF']."?c=".htmlspecialchars($_GET['c'])."&amp;delete=yes".$searchurl."\"><b>$langYes</b></a><br />&nbsp;</li>
+    <td><ul><li><a href=\"".$safe_self."?c=".htmlspecialchars($_GET['c'])."&amp;delete=yes".$searchurl."\"><b>$langYes</b></a><br />&nbsp;</li>
   <li><a href=\"listcours.php?c=".htmlspecialchars($_GET['c'])."".$searchurl."\"><b>$langNo</b></a></li></ul></td>
   </tr>";
 	$tool_content .= "</tbody></table><br />";

@@ -100,13 +100,17 @@ if (isset($_POST['store']) && $is_adminOfCourse) {
 
 /*-----------------------------
       'ADD NEW LINE' COMMAND
+       FIXED VULNERABILITY 
   -----------------------------*/
+
 if (isset($chatLine)) {
-	$chatLine=uft8html2utf8(utf8RawUrlDecode($chatLine));
-        $fchat = fopen($fileChatName,'a');
-        fwrite($fchat,$timeNow.' - '.$nick.' : '.stripslashes($chatLine)."\n");
+        $chatLine = uft8html2utf8(utf8RawUrlDecode($chatLine));
+        $safeChatLine = stripslashes(htmlspecialchars($chatLine, ENT_QUOTES, 'UTF-8'));
+        $fchat = fopen($fileChatName, 'a');
+        fwrite($fchat, $timeNow . ' - ' . $nick . ' : ' . $safeChatLine . "\n");
         fclose($fchat);
 }
+    
 
 /*==========================
     DISPLAY MESSAGE LIST

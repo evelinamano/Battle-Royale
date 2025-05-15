@@ -1,4 +1,7 @@
-<?php // $Id: question_pool.php,v 1.25 2009-11-20 14:57:25 jexi Exp $
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+ // $Id: question_pool.php,v 1.25 2009-11-20 14:57:25 jexi Exp $
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -205,13 +208,13 @@ if($is_adminOfCourse) {
 				<img src='../../template/classic/img/arrow_grey.gif' border='0'></div></td>
 				<td><a href=\"admin.php?editQuestion=".$row['id']."&fromExercise=".$fromExercise."\">".$row['question']."</a><br/><small class='invisible'>".$answerType."</small></td>
 				<td class='center'><div align='center'>";
-				$tool_content .= "<a href=\"".$_SERVER['PHP_SELF']."?recup=".$row['id'].
+				$tool_content .= "<a href=\"".$safe_self."?recup=".$row['id'].
 					"&fromExercise=".$fromExercise."\"><img src='../../template/classic/img/enroll.gif' border='0' title='$langReuse'></a>";
 			}
 			$tool_content .= "</td>";	
 			if(!isset($fromExercise)) {
 				$tool_content .= "<td><div align='center'>
-					<a href=\"".$_SERVER['PHP_SELF']."?exerciseId=".$exerciseId."&delete=".$row['id']."\"". 
+					<a href=\"".$safe_self."?exerciseId=".$exerciseId."&delete=".$row['id']."\"". 
 					" onclick=\"javascript:if(!confirm('".addslashes(htmlspecialchars($langConfirmYourChoice)).
 					"')) return false;\"><img src='../../template/classic/img/delete.gif' border='0' title='$langDelete'></a></div></td>";
 			}
@@ -245,7 +248,7 @@ if($is_adminOfCourse) {
 		if ($page > 0) {
 			$prevpage = $page-1;
 			if (isset($fromExercise)) {
-				$tool_content .= "<small>&lt;&lt; <a href=\"".$_SERVER['PHP_SELF'].
+				$tool_content .= "<small>&lt;&lt; <a href=\"".$safe_self.
 				"?exerciseId=".$exerciseId.
 				"&fromExercise=".$fromExercise.
 				"&page=".$prevpage."\">".$langPreviousPage."</a></small>";
@@ -257,7 +260,7 @@ if($is_adminOfCourse) {
 		if ($page < $numpages) {
 			$nextpage = $page+1;
 			if (isset($fromExercise)) {
-				$tool_content .= "<small><a href='".$_SERVER['PHP_SELF'].
+				$tool_content .= "<small><a href='".$safe_self.
 				"?exerciseId=".$exerciseId.
 				"&fromExercise=".$fromExercise.
 				"&page=".$nextpage."'>".$langNextPage.

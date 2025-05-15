@@ -1,3 +1,7 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 <?
 /*========================================================================
 *   Open eClass 2.3
@@ -56,6 +60,7 @@ $nameTools = $langAgenda;
 $tool_content = $head_content = "";
 
 mysql_select_db($dbname);
+$escaped_self= htmlspecialchars($safe_self);
 
 if ($is_adminOfCourse and (isset($_GET['addEvent']) or isset($_GET['id']))) {
 	$lang_editor = langname_to_code($language);
@@ -235,17 +240,17 @@ function confirmation (name)
 
 	$tool_content .= "\n  <div id='operations_container'>\n    <ul id='opslist'>";
 	if ((!isset($addEvent) && @$addEvent != 1) || isset($_POST['submit'])) {
-		$tool_content .= "\n<li><a href='$_SERVER[PHP_SELF]?addEvent=1'>".$langAddEvent."</a></li>";
+		$tool_content .= "\n<li><a href='{$escaped_self}?addEvent=1'>".$langAddEvent."</a></li>";
 	}
 
 	$sens =" ASC";
 	$result = db_query("SELECT id FROM agenda", $currentCourseID);
 	if (mysql_num_rows($result) > 1) {
 		if (isset($_GET["sens"]) && $_GET["sens"]=="d") {
-			$tool_content .=  "\n<li><a href='$_SERVER[PHP_SELF]?sens=' >$langOldToNew</a></li>";
+			$tool_content .=  "\n<li><a href='{$escaped_self}?sens=' >$langOldToNew</a></li>";
 			$sens=" DESC ";
 		} else {
-			$tool_content .=  "\n<li><a href='$_SERVER[PHP_SELF]?sens=d' >$langOldToNew</a></li>";
+			$tool_content .=  "\n<li><a href='{$escaped_self}?sens=d' >$langOldToNew</a></li>";
 		}
 	}
 	$tool_content .= "\n    </ul>\n  </div>\n";
@@ -276,9 +281,9 @@ function confirmation (name)
 
 	if (isset($_GET['addEvent']) or isset($_GET['edit'])) {
 		$nameTools = $langAddEvent;
-		$navigation[] = array ("url" => $_SERVER['PHP_SELF'], "name" => $langAgenda);
+		$navigation[] = array ("url" => $safe_self, "name" => $langAgenda);
 		$tool_content .= "
-<form method='post' action='$_SERVER[PHP_SELF]' onsubmit='return checkrequired(this, \"titre\");'>
+<form method='post' action='{$escaped_self}' onsubmit='return checkrequired(this, \"titre\");'>
     <input type='hidden' name='id' value='$id' />
     <table width='99%' class='FormData'>
     <tbody>
@@ -413,25 +418,25 @@ if (mysql_num_rows($result) > 0) {
             if ($myrow["titre"]=="") {
                 $tool_content .= "".$langAgendaNoTitle."";
             } else {
-                $tool_content .= "".$myrow["titre"]."";
+                $tool_content .= "".htmlspecialchars($myrow["titre"])."";
             }
 		$tool_content .= "</b> (".$langLasting.": ".$myrow["lasting"]." ".$message.")</p>
-		<p class='agendaBody'>$contenu</p></td>";
+		<p class='agendaBody'> " .htmlspecialchars($contenu). " </p></td>";
 
 	//agenda event functions
 	//added icons next to each function
 	//(evelthon, 12/05/2006)
 	if ($is_adminOfCourse) {
 		$tool_content .=  "\n<td class='right' width='80'>
-		<a href='$_SERVER[PHP_SELF]?id=".$myrow['id']."&amp;edit=true'>
+		<a href='{$escaped_self}?id=".$myrow['id']."&amp;edit=true'>
             	<img src='../../template/classic/img/edit.gif' border='0' title='".$langModify."'></a>&nbsp;
-        	<a href='$_SERVER[PHP_SELF]?id=".$myrow[0]."&amp;delete=yes' onClick='return confirmation('".addslashes($myrow["titre"])."');'>
+        	<a href='{$escaped_self}?id=".$myrow[0]."&amp;delete=yes' onClick='return confirmation('".addslashes($myrow["titre"])."');'>
             	<img src='../../template/classic/img/delete.gif' border='0' title='".$langDelete."'></a>&nbsp;";
 		if ($myrow["visibility"] == 'v') {
-			$tool_content .= "<a href='$_SERVER[PHP_SELF]?id=".$myrow[0]."&amp;mkInvisibl=true'>
+			$tool_content .= "<a href='{$escaped_self}?id=".$myrow[0]."&amp;mkInvisibl=true'>
         	    	<img src='../../template/classic/img/visible.gif' border='0' title='".$langVisible."'></a>";
 		} else {
- 			$tool_content .= "<a href='$_SERVER[PHP_SELF]?id=".$myrow[0]."&amp;mkVisibl=true'>
+ 			$tool_content .= "<a href='{$escaped_self}?id=".$myrow[0]."&amp;mkVisibl=true'>
         	    	<img src='../../template/classic/img/invisible.gif' border='0' title='".$langVisible."'></a>";
 		}
 		$tool_content .= "</td>";

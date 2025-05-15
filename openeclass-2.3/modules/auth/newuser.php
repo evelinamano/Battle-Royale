@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -58,7 +59,7 @@ $lang = langname_to_code($language);
 // display form
 if (!isset($submit)) {
 	// Main body
-	@$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+	@$tool_content .= "<form action='". $safe_Self ."' method='post'>
 	<table width='99%' style='border: 1px solid #edecdf;'>
 	<thead>
 	<tr>
@@ -99,7 +100,7 @@ if (!isset($submit)) {
 		<td colspan='2'><select name='department'>";
 	$deps=mysql_query("SELECT name, id FROM faculte ORDER BY id");
 	while ($dep = mysql_fetch_array($deps)) {
-		$tool_content .= "\n<option value='".$dep[1]."'>".$dep[0]."</option>";
+		$tool_content .= "\n<option value='".htmlspecialchars($dep[1], ENT_QUOTES, 'UTF-8')."'>".htmlspecialchars($dep[0], ENT_QUOTES, 'UTF-8')."</option>";
 	}
 	$tool_content .= "\n</select>
 	</td>
@@ -129,7 +130,14 @@ if (!isset($submit)) {
 } else {
 
 	// trim white spaces in the end and in the beginning of the word
-	$uname = preg_replace('/\ +/', ' ', trim(isset($_POST['uname'])?$_POST['uname']:''));
+	//$uname = htmlspecialchars(preg_replace('/\ +/', ' ', trim(isset($_POST['uname'])?$_POST['uname']:'')), ENT_QUOTES, 'UTF-8');
+	$prenom_form = htmlspecialchars(trim($_POST['prenom_form']), ENT_QUOTES, 'UTF-8');
+    $nom_form = htmlspecialchars(trim($_POST['nom_form']), ENT_QUOTES, 'UTF-8');
+    $uname = htmlspecialchars(trim($_POST['uname']), ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars(trim($_POST['email']), ENT_QUOTES, 'UTF-8');
+    $am = htmlspecialchars(trim($_POST['am']), ENT_QUOTES, 'UTF-8');
+    $department = htmlspecialchars(trim($_POST['department']), ENT_QUOTES, 'UTF-8');
+    $lang = htmlspecialchars(trim($_POST['lang']), ENT_QUOTES, 'UTF-8');
 	// registration
 	$registration_errors = array();
 	// check if there are empty fields
@@ -231,7 +239,7 @@ if (!isset($submit)) {
 		foreach ($registration_errors as $error) {
 			$tool_content .= "<p>$error</p>";
 		}
-		$tool_content .= "<p><a href='$_SERVER[PHP_SELF]?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .
+		$tool_content .= "<p><a href='". $safe_Self ."?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .
 					"</td></tr></tbody></table><br /><br />";
 	}
 

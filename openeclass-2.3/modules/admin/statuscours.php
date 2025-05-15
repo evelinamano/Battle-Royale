@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -94,7 +97,7 @@ else {
 	$visible = $row['visible'];
 	$visibleChecked[$visible]="checked";
 	// Constract edit form
-	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?c=".htmlspecialchars($_GET['c'])."".$searchurl." method=\"post\">
+	$tool_content .= "<form action=".$safe_self."?c=".htmlspecialchars($_GET['c'])."".$searchurl." method=\"post\">
 	<table class=\"FormData\" width=\"99%\" align=\"left\">
 	<tbody>
 	<tr><th width=\"220\">&nbsp;</th>

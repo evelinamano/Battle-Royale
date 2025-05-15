@@ -1,4 +1,7 @@
-<?php // $Id: answer_admin.inc.php,v 1.22 2009-11-24 10:57:21 jexi Exp $
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+ // $Id: answer_admin.inc.php,v 1.22 2009-11-24 10:57:21 jexi Exp $
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -561,7 +564,7 @@ cData;
 		{
 
     $tool_content .= "
-      <form name=\"formulaire\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?modifyAnswers=".$modifyAnswers."\">\n";
+      <form name=\"formulaire\" method=\"post\" action=\"".$safe_self."?modifyAnswers=".$modifyAnswers."\">\n";
 if(!isset($setWeighting))
 	$tempSW = "";
 else

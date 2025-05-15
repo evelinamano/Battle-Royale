@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -271,7 +274,7 @@ $tool_content .= "
 
 
 $tool_content .="
-  <form name='groupedit' method='post' action='".$_SERVER['PHP_SELF']."?edit=yes&amp;userGroupId=$userGroupId' onsubmit=\"return checkrequired(this,'name');\">
+  <form name='groupedit' method='post' action='".$safe_self."?edit=yes&amp;userGroupId=$userGroupId' onsubmit=\"return checkrequired(this,'name');\">
     <br />
     <table width='99%' class='FormData'>
     <thead>

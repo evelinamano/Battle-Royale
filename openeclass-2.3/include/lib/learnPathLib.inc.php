@@ -1,4 +1,9 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
+
 
 /*=============================================================================
        	GUnet eClass 2.0
@@ -150,7 +155,7 @@ function commentBox($type, $mode)
             $oldComment = db_query_get_single_value($sql);
 
             $output .= '
-      <form method="POST" action="'.$_SERVER['PHP_SELF'].'">' . "\n"
+      <form method="POST" action="'.$safe_self.'">' . "\n"
                 .disp_html_area('insertCommentBox', $oldComment, 1, 50) . "\n"
                 .'        <input type="hidden" name="cmd" value="update' . $col_name . '" />' . "\n"
                 .'        <input type="submit" value="' . $langOk . '" />' . "\n"
@@ -198,7 +203,7 @@ function commentBox($type, $mode)
             if ( $is_adminOfCourse )
             {
                 $output .= '' . "\n"
-                .    '<a href="' . $_SERVER['PHP_SELF'] . '?cmd=update' . $col_name . '">' . "\n"
+                .    '<a href="' . $safe_self . '?cmd=update' . $col_name . '">' . "\n"
                 .    $langAdd . '</a>' . "\n"
                 ;
             }
@@ -210,10 +215,10 @@ function commentBox($type, $mode)
             // display edit and delete links if user as the right to see it
             if ( $is_adminOfCourse )
             {
-                $output .= '&nbsp;&nbsp;&nbsp;<a href="' . $_SERVER['PHP_SELF'] . '?cmd=update' . $col_name . '">' . "\n"
+                $output .= '&nbsp;&nbsp;&nbsp;<a href="' . $safe_self . '?cmd=update' . $col_name . '">' . "\n"
                 .    '<img src="../../template/classic/img/edit.gif" alt="' . $langModify . '" title="'.$langModify.'" />'
                 .    '</a>' . "\n"
-                .    '<a href="' . $_SERVER['PHP_SELF'].'?cmd=del' . $col_name . '" '
+                .    '<a href="' . $safe_self.'?cmd=del' . $col_name . '" '
                 .    ' onclick="javascript:if(!confirm(\''.clean_str_for_javascript($langConfirmYourChoice).'\')) return false;">' . "\n"
                 .    '<img src="../../template/classic/img/delete.gif" alt="'.$langDelete.'" title="'.$langDelete.'" /></a>' . "\n"
                 ;
@@ -302,7 +307,7 @@ function nameBox($type, $mode, $formlabel = FALSE)
             $oldName = db_query_get_single_value($sql);
 
             $output .= '
-      <form method="POST" action="' . $_SERVER['PHP_SELF'].'">' . "\n";
+      <form method="POST" action="' . $safe_self.'">' . "\n";
 
              if($formlabel != FALSE)
              	//$output .= '<label for="newLabel">'.$formlabel.'</label>&nbsp;&nbsp;';
@@ -338,7 +343,7 @@ function nameBox($type, $mode, $formlabel = FALSE)
         $output .=  $currentName;
 
         if ( $is_adminOfCourse )
-            $output .= '&nbsp;&nbsp;&nbsp;<a href="' . $_SERVER['PHP_SELF'] . '?cmd=updateName">'
+            $output .= '&nbsp;&nbsp;&nbsp;<a href="' . $safe_self . '?cmd=updateName">'
             .    '<img src="../../template/classic/img/edit.gif" alt="' . $langModify . '" title="' . $langModify . '" />'
             .    '</a>' . "\n";
         //$output .= '</strong>'."\n\n";
@@ -661,7 +666,7 @@ function display_my_exercises($dialogBox, $style)
     {
         $output .= disp_message_box($dialogBox, $style).'<br />'."\n";
     }
-    $output .= '    <form method="POST" name="addmodule" action="' . $_SERVER['PHP_SELF'] . '?cmdglobal=add">'."\n";
+    $output .= '    <form method="POST" name="addmodule" action="' . $safe_self . '?cmdglobal=add">'."\n";
     $output .= '    <table width="99%" class="LearnPathSum">'."\n"
     .    '    <thead>'."\n"
     .    '    <tr align="center" class="LP_header">'."\n"
@@ -790,7 +795,7 @@ function display_my_documents($dialogBox, $style)
     $cmdParentDir  = rawurlencode($parentDir);
 
     $output .= '
-    <form action="' . $_SERVER['PHP_SELF'] . '" method="POST">';
+    <form action="' . $safe_self . '" method="POST">';
 
     /*--------------------------------------
     DIALOG BOX SECTION
@@ -820,7 +825,7 @@ function display_my_documents($dialogBox, $style)
     {
         $output .= '
       <td width="1" ><img src="' . $imgRepositoryWeb . 'parent.gif" border="0" align="absbottom" hspace="5" alt="" /></td>
-      <td width="10" class="right"><a href="' . $_SERVER['PHP_SELF'] . '?openDir=' . $cmdParentDir . '"><small>' . $langUp . '</small></a></td>';
+      <td width="10" class="right"><a href="' . $safe_self . '?openDir=' . $cmdParentDir . '"><small>' . $langUp . '</small></a></td>';
     }
         $output .= '
     </tr>
@@ -885,7 +890,7 @@ function display_my_documents($dialogBox, $style)
                 $image       = 'folder.gif';
                 $size        = '&nbsp;';
                 $date        = '&nbsp;';
-                $urlFileName = $_SERVER['PHP_SELF'] . '?openDir=' . $cmdFileName;
+                $urlFileName = $safe_self . '?openDir=' . $cmdFileName;
             }
 
             $output .= '
@@ -1882,7 +1887,7 @@ function get_limited_page_links($sql, $limiter, $stringPreviousPage, $stringNext
 	$prevpage = $currentpage - 1;
 	$nextpage = $currentpage + 1;
 
-	$url = basename($_SERVER['PHP_SELF']);
+	$url = basename($safe_self);
 
 	switch($_SERVER['argc']) {
 		case 0:

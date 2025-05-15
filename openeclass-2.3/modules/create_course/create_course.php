@@ -337,6 +337,11 @@ if (isset($_POST['create_course'])) {
         $nameTools = $langCourseCreate;
         $facid = intval($faculte);
         $facname = find_faculty_by_id($facid);
+		$facname = htmlspecialchars($facname);
+
+		
+
+		
 
         // create new course code: uppercase, no spaces allowed
         $repertoire = strtoupper(new_code($facid));
@@ -427,7 +432,7 @@ if (isset($_POST['create_course'])) {
         $tool_content .= doImportFromBetaCMSAfterCourseCreation($repertoire, $mysqlMainDb, $webDir);
         // --------------------------------------------------
         $tool_content .= "
-                <p class=\"success_small\">$langJustCreated: &nbsp;<b>$intitule</b></p>
+                <p class=\"success_small\">$langJustCreated: &nbsp;<b>" .htmlspecialchars($intitule). " </b></p>
                 <p><small>$langEnterMetadata</small></p><br />
                 <p align='center'>&nbsp;<a href='../../courses/$repertoire/index.php' class=mainpage>$langEnter</a>&nbsp;</p>";
 } // end of submit

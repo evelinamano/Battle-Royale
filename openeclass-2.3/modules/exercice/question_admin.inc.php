@@ -1,3 +1,6 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 <? // $Id: question_admin.inc.php,v 1.21 2009-11-20 14:57:25 jexi Exp $
 /*========================================================================
 *   Open eClass 2.3
@@ -121,7 +124,7 @@ cData;
 	// doesn't show the edit link if we come from the question pool to pick a question for an exercise
 	if(!isset($fromExercise)) {
 		$tool_content .= "
-		<a href=\"".$_SERVER['PHP_SELF']."?modifyQuestion=".$questionId."\">
+		<a href=\"".$safe_self."?modifyQuestion=".$questionId."\">
 		<img src='../../template/classic/img/edit.gif' border='0' align='absmiddle' title='$langModify'></a>";
 	}
 
