@@ -161,7 +161,7 @@ for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 	$tool_content .= "<td width='1'>
 	<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet' /></td>
 	<td><a href='{$urlServer}courses/$logs[code]/'><b>".htmlspecialchars($logs[2])."</b>
-	</a> (".htmlspecialchars($logs[1]).")<br /><i>".$logs[3]."</i>
+	</a> (".htmlspecialchars($logs[1]).")<br /><i>".htmlspecialchars($logs[3])."</i>
 	</td>
 	<td align='center'>";
 	// Define course type

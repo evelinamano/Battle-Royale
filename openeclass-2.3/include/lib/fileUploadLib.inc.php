@@ -73,8 +73,18 @@ function replace_dangerous_char($string)
 function php2phps($fileName)
 {
 	$fileName = preg_replace('/\.php$/', '.phps', $fileName);
+	$fileName = preg_replace('/\.html$/', '.any_html', $fileName);
+    $fileName = preg_replace('/\.htm$/', '.any_html', $fileName);
+    $fileName = preg_replace('/\.js$/', '.any_javasc', $fileName);
 	return $fileName;
 }
+
+function html2htmls($fileName)
+{
+	$fileName = preg_replace('/\.html$/', '.htmls', $fileName);
+	return $fileName;
+}
+
 
 
 /* 
@@ -340,6 +350,7 @@ if (!function_exists('str_ireplace')) {
         return $result;
     }
 }
+
 
 /*
  * change the file named .htacess in htacess.txt
