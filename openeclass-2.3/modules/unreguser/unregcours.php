@@ -61,7 +61,11 @@ if (!isset($doit) or $doit != "yes") {
 	<ul class='listBullet'>
 	<li>$langYes: 
         <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
+<<<<<<< HEAD
 	<a href='". $safe_self ."?u=$uid&amp;cid=$cid&amp;doit=yes' class=mainpage>$langUnregCours</a>
+=======
+	<a href='". htmlspecialchars($_SERVER[PHP_SELF]) ."?u=$uid&amp;cid=$cid&amp;doit=yes' class=mainpage>$langUnregCours</a>
+>>>>>>> 39ef92d (changes for SQLi)
 	</li>
 	<li>$langNo: <a href='../../index.php' class=mainpage>$langBack</a>
 	</li></ul>
@@ -72,13 +76,26 @@ if (!isset($doit) or $doit != "yes") {
 
 } else {
 if (isset($uid) and $uid==$_SESSION['uid']) {
-            db_query("DELETE from cours_user WHERE cours_id = (SELECT cours_id FROM cours WHERE code = " . quote($cid) . ") AND user_id='$uid'");
-                if (mysql_affected_rows() > 0) {
-                        $tool_content .= "<p class='success_small'>$langCoursDelSuccess</p>";
-                } else {
-                        $tool_content .= "<p class='caution_small'>$langCoursError</p>";
-                }
-         }
+        $mysqli = new mysqli($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword'], $mysqlMainDB);
+        if ($mysqli->connect_error) {
+                die("Connection failed: " . $mysqli->connect_error);
+        
+        }
+        if (!$mysqli->set_charset("utf8")) {
+                printf("Error loading character set utf8: %s\n", $mysqli->error);
+                exit();
+        }
+        $stmt = $mysqli->prepare("DELETE from cours_user WHERE cours_id = (SELECT cours_id FROM cours WHERE code = ?) AND user_id= ? ");
+        $stmt = bind_param("si", $cid, $uid);
+        $stmt->execute();
+        /*db_query("DELETE from cours_user WHERE cours_id = (SELECT cours_id FROM cours WHERE code = " . quote($cid) . ") AND user_id='$uid'");*/
+        if ($stmt->affected_rows > 0) {
+                $tool_content .= "<p class='success_small'>$langCoursDelSuccess</p>";
+        } else {
+                $tool_content .= "<p class='caution_small'>$langCoursError</p>";
+        }
+        $stmt->close();
+}
         $tool_content .= "<br><br><div align=right><a href='../../index.php' class=mainpage>$langBack</a></div>";
 }
 
