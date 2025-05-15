@@ -231,28 +231,36 @@ function update_assignment_submit()
 
 //Correction SQLi 
 function is_admin($username, $password, $mysqlMainDb) {
-	$mysqli = new mysqli($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword'], $mysqlMainDb);
-  if ($mysqli->connect_error) {
-      die("Connection failed: " . $mysqli->connect_error);
-  }
-  if (!$mysqli->set_charset("utf8")) {
-      printf("Error loading character set utf8: %s\n", $mysqli->error);
-      exit();
-  }
+    // Connect to the database
+    $conn = mysql_connect($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword']);
+    if (!$conn) {
+        die("Connection failed: " . mysql_error());
+    }
 
-  $stmt = $mysqli->prepare("SELECT * FROM user, admin WHERE admin.idUser = user.user_id AND user.username = ? AND user.password = ?");
-  $stmt->bind_param("ss", $username,$password);
-  $stmt->execute();
-  $r = $stmt->get_result();
-	$stmt->close();
+    // Select the database
+    if (!mysql_select_db($mysqlMainDb, $conn)) {
+        die("Database selection failed: " . mysql_error());
+    }
 
-	if (!$r or mysqli_num_rows($r) == 0) {
-		return FALSE;
-	} else {
-		$row = $r->fetch_assoc();
-		$_SESSION['uid'] = $row['user_id'];
-		return TRUE;
-	}
+    // Escape inputs to avoid SQL injection (basic protection)
+    $username_escaped = mysql_real_escape_string($username);
+    $password_escaped = mysql_real_escape_string($password);
+
+    // Build and run query
+    $query = "SELECT user.user_id 
+              FROM user, admin 
+              WHERE admin.idUser = user.user_id 
+              AND user.username = '$username_escaped' 
+              AND user.password = '$password_escaped'";
+
+    $result = mysql_query($query, $conn);
+    if (!$result || mysql_num_rows($result) == 0) {
+        return FALSE;
+    } else {
+        $row = mysql_fetch_assoc($result);
+        $_SESSION['uid'] = $row['user_id'];
+        return TRUE;
+    }
 }
 //End of SQLi Correction
 
