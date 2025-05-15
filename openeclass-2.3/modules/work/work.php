@@ -130,6 +130,11 @@ hContent;
 // main program
 //-------------------------------------------
 
+//Check for SQLi
+if (isset($id)){
+	$id = mysql_real_escape_string(intval($id));
+}
+
 if ($is_adminOfCourse) {
 	if (isset($grade_comments)) {
 		$nameTools = $m['WorkView'];
