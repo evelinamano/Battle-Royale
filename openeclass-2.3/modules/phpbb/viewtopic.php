@@ -87,19 +87,30 @@ if (isset($_GET['all'])) {
 }
 
 
-//$sql = "SELECT f.forum_type, f.forum_name
-//	FROM forums f, topics t 
-//	WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic) AND (t.forum_id = f.forum_id)";
-//if (!$result = db_query($sql, $currentCourseID)) {
-//	$tool_content .= $langErrorConnectForumDatabase;
-//	draw($tool_content, 2);
-//	exit();
-//}
-//if (!$myrow = mysql_fetch_array($result)) {
-//	$tool_content .= $langErrorTopicSelect;
-//	draw($tool_content, 2);
-//	exit();
-//}
+/*$sql = "SELECT f.forum_type, f.forum_name
+	FROM forums f, topics t 
+	WHERE (f.forum_id = '$forum') AND (t.topic_id = $topic) AND (t.forum_id = f.forum_id)";
+if (!$result = db_query($sql, $currentCourseID)) {
+	$tool_content .= $langErrorConnectForumDatabase;
+	draw($tool_content, 2);
+	exit();
+}
+if (!$myrow = mysql_fetch_array($result)) {
+	$tool_content .= $langErrorTopicSelect;
+	draw($tool_content, 2);
+	exit();
+}*/
+$mysqli = new mysqli(
+    $GLOBALS['mysqlServer'],
+    $GLOBALS['mysqlUser'],
+    $GLOBALS['mysqlPassword'],
+    $mysqlMainDb
+);
+
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+
 $forum = intval($forum);
 $topic = intval($topic);
 
