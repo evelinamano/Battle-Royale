@@ -46,7 +46,7 @@ include '../../include/baseTheme.php';
 $nameTools = $langUnregUser;
 $navigation[]= array ("url"=>"index.php", "name"=> $langAdmin);
 $tool_content = "";
-
+session_start();
 // get the incoming values and initialize them
 $u = isset($_GET['u'])? intval($_GET['u']): false;
 $c = isset($_GET['c'])? intval($_GET['c']): false;
@@ -57,6 +57,13 @@ $u_realname = $u? uid_to_name($u): '';
 $u_statut = get_uid_statut($u);
 $t = 0;
 
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token']  = md5(uniqid(mt_rand(), true));
+	
+
+}
+
 if (!$doit) {
         $tool_content .= "<h4>$langConfirmDelete</h4><p>$langConfirmDeleteQuestion1 <em>$u_realname ($u_account)</em>";
         if($c) {
@@ -64,10 +71,15 @@ if (!$doit) {
         }
         $tool_content .= ";</p>
                 <ul>
+                <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
                 <li>$langYes: <a href=\"unreguser.php?u=".htmlspecialchars($u)."&c=".htmlspecialchars($c)."&doit=yes\">$langDelete</a><br>&nbsp;</li>
                 <li>$langNo: <a href=\"edituser.php?u=".htmlspecialchars($u)."\">$langBack</a></li>
                 </ul>";
 } else {
+        // Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+        }
         if (!$c) {
                 if ($u == 1) {
                         $tool_content .= $langTryDeleteAdmin;

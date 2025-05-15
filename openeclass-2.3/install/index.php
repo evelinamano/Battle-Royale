@@ -1,4 +1,8 @@
-<?php session_start();
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+ session_start();
 header('Content-Type: text/html; charset=UTF-8');
 /*========================================================================
 *   Open eClass 2.3
@@ -132,7 +136,7 @@ if(isset($welcomeScreen) )
 	$dbMyAdmin="../admin/mysql/";
 	$phpSysInfoURL="../admin/sysinfo/";
 	// extract the path to append to the url if it is not installed on the web root directory
-	$urlAppendPath = str_replace('/install/index.php', '', $_SERVER['PHP_SELF']);
+	$urlAppendPath = str_replace('/install/index.php', '', $safe_self);
 	$urlForm = "http://".$_SERVER['SERVER_NAME'].$urlAppendPath."/";
 	$pathForm = realpath("../")."/";
 	$emailForm = $_SERVER['SERVER_ADMIN'];
@@ -149,7 +153,7 @@ if(isset($welcomeScreen) )
 }
 
 if (isset($alreadyVisited)) {
-	$tool_content .= "<form action=".$_SERVER['PHP_SELF']."?alreadyVisited=1 method=\"post\">";
+	$tool_content .= "<form action=".$safe_self."?alreadyVisited=1 method=\"post\">";
 	$tool_content .= "
             <input type=\"hidden\" name=\"urlAppendPath\" value=\"$urlAppendPath\">
             <input type=\"hidden\" name=\"pathForm\" value=\"".str_replace("\\","/",realpath($pathForm)."/")."\" >
@@ -738,12 +742,12 @@ elseif (isset($_REQUEST['install1']) || isset($_REQUEST['back1']))
 	</tr>
 	<tr>
 	<td class=\"odd\" class=\"left\">$langChooseLang:</td>
-	<td><form name='langform' action='$_SERVER[PHP_SELF]' method=\"post\">".selection($langLanguages, 'lang', $lang, 'onChange="document.langform.submit();"')."</form></td>
+	<td><form name='langform' action='". $safe_Self ."' method=\"post\">".selection($langLanguages, 'lang', $lang, 'onChange="document.langform.submit();"')."</form></td>
 	</tr>
 	<tr>
 	<td class=\"odd\" class=\"left\">&nbsp;</td>
 	<td>
-	<form action='$_SERVER[PHP_SELF]?alreadyVisited=1' method=\"post\">
+	<form action='". $safe_Self ."?alreadyVisited=1' method=\"post\">
 	<input type=\"hidden\" name=\"welcomeScreen\" value=\"welcomeScreen\">
 	<input type=\"submit\" name=\"install1\" value=\"$langNextStep >\">
 	</form>

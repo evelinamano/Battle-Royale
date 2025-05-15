@@ -675,6 +675,7 @@ function assignment_details($id, $row, $message = null)
     </table>
     <br/>";
 	}
+
 	$tool_content .= "
     <table width=\"99%\" class=\"FormData\">
     <tbody>
@@ -683,21 +684,22 @@ function assignment_details($id, $row, $message = null)
       <td><b>".$m['WorkInfo']."</b></td>
     </tr>
     <tr>
-      <th class='left'>$m[title]:</th>
-      <td>$row[title]</td>
-    </tr>";
+  		<th class='left'>".htmlspecialchars($m['title']).":</th>
+  		<td>".htmlspecialchars($row['title'])."</td>
+	</tr>";
 	$tool_content .= "
-    <tr>
-      <th class='left'>$m[description]:</th>
-      <td>$row[description]</td>
-    </tr>";
+	<tr>
+  		<th class='left'>".htmlspecialchars($m['description']).":</th>
+  		<td>".htmlspecialchars($row['description'])."</td>
+	</tr>";
 	if (!empty($row['comments'])) {
-		$tool_content .= "
-    <tr>
-      <th class='left'>$m[comments]:</th>
-      <td>$row[comments]</td>
-    </tr>";
+    $tool_content .= "
+	<tr>
+  		<th class='left'>".htmlspecialchars($m['comments']).":</th>
+ 	 	<td>".htmlspecialchars($row['comments'])."</td>
+	</tr>";
 	}
+
 	$tool_content .= "
     <tr>
       <th class='left'>$m[start_date]:</th>

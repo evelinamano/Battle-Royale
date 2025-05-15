@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 
 /*========================================================================
 *   Open eClass 2.3
@@ -442,7 +445,7 @@ function confirmation (name)
               <div id="operations_container">
                 <ul id="opslist">
                   <li><a href="'
-                    . $_SERVER['PHP_SELF']
+                    . $safe_self
                     . '?action=rqEdit'
                     . '">'
                     . $langWikiCreateNewWiki
@@ -576,7 +579,7 @@ function confirmation (name)
                         // edit link
 
                         $tool_content .= '          <td style="text-align: center;">';
-                        $tool_content .= '<a href="'.$_SERVER['PHP_SELF'].'?wikiId='
+                        $tool_content .= '<a href="'.$safe_self.'?wikiId='
                             . $entry['id'].'&amp;action=rqEdit'
                             . '">'
                             . '<img src="'.$imgRepositoryWeb.'/edit.gif" border="0" alt="'.$langWikiEditProperties.'" title="'.$langWikiEditProperties.'" />'
@@ -588,7 +591,7 @@ function confirmation (name)
                         // delete link
 
                         $tool_content .= '<td style="text-align: center;">';
-                        $tool_content .= '<a href="'.$_SERVER['PHP_SELF'].'?wikiId='
+                        $tool_content .= '<a href="'.$safe_self.'?wikiId='
                             . $entry['id'].'&amp;action=exDelete'
                             . '">'
                             . '<img src="'.$imgRepositoryWeb.'/delete.gif" border="0" alt="'.$langDelete.'" title="'.$langDelete.'" onClick="return confirmation();"/>'
@@ -613,7 +616,7 @@ function confirmation (name)
         }
         default:
         {
-            trigger_error( "Invalid action supplied to " . $_SERVER['PHP_SELF']
+            trigger_error( "Invalid action supplied to " . $safe_self
                 , E_USER_ERROR
                 );
         }

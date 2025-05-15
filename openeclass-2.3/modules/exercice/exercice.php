@@ -186,17 +186,17 @@ while($row = mysql_fetch_array($result)) {
 	// prof only
         if($is_adminOfCourse) {
                 if (!empty($row['description'])) {
-                        $descr = "<br/><small>$row[description]</small>";
+                        $descr = "<br/><small>".htmlspecialchars($row[description])."</small>";
                 } else {
                         $descr = '';
                 }
 		if(!$row['active']) {
 			$tool_content .= "<td width=\"1\"><img style='padding-top:3px;' src='${urlServer}/template/classic/img/arrow_red.gif' alt='' /></td><td>
 			<div class=\"invisible\">
-			<a href=\"exercice_submit.php?exerciseId=${row['id']}\">".$row['titre']."</a>$descr</div></td>";
+			<a href=\"exercice_submit.php?exerciseId=${row['id']}\">" . htmlspecialchars($row['titre']) . "</a>$descr</div></td>";
 		} else {
 			$tool_content .= "<td width=\"1\"><img style='padding-top:3px;' src='${urlServer}/template/classic/img/arrow_grey.gif' alt='' /></td><td>
-			<a href=\"exercice_submit.php?exerciseId=${row['id']}\">".$row['titre']."</a>$descr</td>";
+			<a href=\"exercice_submit.php?exerciseId=${row['id']}\">" . htmlspecialchars($row['titre'])."</a>$descr</td>";
 		}
 
 		$eid = $row['id'];
@@ -247,13 +247,13 @@ else {
 	$CurrentDate = mktime(0, 0 , 0,substr($CurrentDate, 5,2), substr($CurrentDate, 8,2),substr($CurrentDate, 0,4));
 	if (($CurrentDate >= $temp_StartDate) && ($CurrentDate <= $temp_EndDate)) {
 		$tool_content .= "<td width=\"1\"><img style='padding-top:3px;' src='${urlServer}/template/classic/img/arrow_grey.gif' alt='' /></td>
-		<td><a href=\"exercice_submit.php?exerciseId=".$row['id']."\">".$row['titre']."</a>";
+		<td><a href=\"exercice_submit.php?exerciseId=".$row['id']."\">".htmlspecialchars($row['titre'])."</a>";
 	} else {
 		$tool_content .= "<td width='1'>
 			<img style='padding-top:3px;' src='${urlServer}/template/classic/img/arrow_grey.gif' alt='' />
-			</td><td>".$row['titre']."&nbsp;&nbsp;(<font color=\"red\">$m[expired]</font>)";
+			</td><td>".htmlspecialchars($row['titre'])."&nbsp;&nbsp;(<font color=\"red\">$m[expired]</font>)";
 	}
-	$tool_content .= "<br/><small>$row[description]</small></td>
+	$tool_content .= "<br/><small>". htmlspecialchars($row['description']) ."</small></td>
         <td align='center'><small>".nice_format($row['StartDate'])."</small></td>
         <td align='center'><small>".nice_format($row['EndDate'])."</small></td>";
 	// how many attempts we have.

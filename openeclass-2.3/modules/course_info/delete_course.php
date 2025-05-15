@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -61,7 +64,7 @@ if($is_adminOfCourse) {
 		</tr>
 		<tr>
 		<th rowspan='2' class='left' width='220'>$langConfirmDel :</th>
-		<td width='52' align='center'><a href=\"".$_SERVER['PHP_SELF']."?delete=yes\">$langYes</a></td>
+		<td width='52' align='center'><a href=\"".$safe_self."?delete=yes\">$langYes</a></td>
 		<td><small>$langByDel</small></td>
 		</tr>
 		<tr>

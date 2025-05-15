@@ -1,4 +1,5 @@
 <? 
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -106,7 +107,7 @@ if(!empty($is_submit)) {
 	if ($is_valid) { // connection successful	
 		$tool_content .= "<table width='99%' style='border: 1px solid #edecdf;'>
 		<thead><tr><td>
-		<form action='$_SERVER[PHP_SELF]' method='post'>" .
+		<form action='". $safe_Self ."' method='post'>" .
 		(isset($GLOBALS['auth_user_info'])?
 		('<input type="hidden" name="prenom_form" value="' . $GLOBALS['auth_user_info']['firstname'] .
 		'" /><input type="hidden" name="nom_form" value="' . $GLOBALS['auth_user_info']['lastname'] .

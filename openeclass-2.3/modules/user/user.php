@@ -1,4 +1,9 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -351,7 +356,7 @@ if($countUser>=50) {
 	}
 	$tool_content .= "</td>
 	<td valign='bottom' align='center' width='20%'>
-	<form method='post' action='".$_SERVER['PHP_SELF']."?startList=$startList&amp;numbList=all'>
+	<form method='post' action='".$safe_self."?startList=$startList&amp;numbList=all'>
 		<input type='submit' value='$langAll' name='numbering' class='auth_input' />
 	</form>
 	</td>

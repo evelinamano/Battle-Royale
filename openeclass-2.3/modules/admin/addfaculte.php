@@ -1,4 +1,8 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -64,15 +68,15 @@ $navigation[] = array("url" => "index.php", "name" => $langAdmin);
 if (isset($a)) {
 	switch ($a) {
 		case 1:
-			$navigation[] = array("url" => "$_SERVER[PHP_SELF]", "name" => $langListFaculteActions);
+			$navigation[] = array("url" => "$safe_Self", "name" => $langListFaculteActions);
 			$nameTools = $langFaculteAdd;
 			break;
 		case 2:
-			$navigation[] = array("url" => "$_SERVER[PHP_SELF]", "name" => $langListFaculteActions);
+			$navigation[] = array("url" => "$safe_Self", "name" => $langListFaculteActions);
 			$nameTools = $langFaculteDel;
 			break;
 		case 3:
-			$navigation[] = array("url" => "$_SERVER[PHP_SELF]", "name" => $langListFaculteActions);
+			$navigation[] = array("url" => "$safe_Self", "name" => $langListFaculteActions);
 			$nameTools = $langFaculteEdit;
 			break;
 	}
@@ -85,7 +89,7 @@ $tool_content = "";
 	// Give administrator a link to add a new faculty
     $tool_content .= "<div id='operations_container'>
 	<ul id='opslist'>
-	<li><a href='$_SERVER[PHP_SELF]?a=1'>".$langAdd."</a></li>
+	<li><a href='". $safe_Self ."?a=1'>".$langAdd."</a></li>
 	</ul>
 	</div>";
 
@@ -125,9 +129,9 @@ if (!isset($a)) {
 		$tool_content .= "\n    <td align='center'>".htmlspecialchars($logs[0])."</td>";
 		// Give administrator a link to delete or edit a faculty
 		$tool_content .= "\n    <td width='15%' align='center' nowrap>
-		<a href='$_SERVER[PHP_SELF]?a=2&c=".$logs['id']."'>
+		<a href='". $safe_Self ."?a=2&c=".$logs['id']."'>
 		<img src='../../images/delete.gif' border='0' title='$langDelete'></img></a>&nbsp;&nbsp;
-		<a href='$_SERVER[PHP_SELF]?a=3&c=".$logs['id']."'>
+		<a href='". $safe_Self ."?a=3&c=".$logs['id']."'>
 		<img src='../../template/classic/img/edit.gif' border='0' title='$langEdit'></img></a></td>
 		</tr>\n";
 		$k++;
@@ -143,31 +147,33 @@ elseif ($a == 1)  {
 		if (empty($codefaculte) or empty($faculte)) {
 			$tool_content .= "<p>".$langEmptyFaculte."</p><br />";
 			$tool_content .= "<center><p>
-			<a href=\"$_SERVER[PHP_SELF]?a=1\">".$langReturnToAddFaculte."</a></p></center>";
+			<a href=\"". $safe_Self ."?a=1\">".$langReturnToAddFaculte."</a></p></center>";
 			}
 		// Check for greek letters
 		elseif (!preg_match("/^[A-Z0-9a-z_-]+$/", $codefaculte)) {
 			$tool_content .= "<p>".$langGreekCode."</p><br />";
-			$tool_content .= "<center><p><a href=\"$_SERVER[PHP_SELF]?a=1\">".$langReturnToAddFaculte."</a></p></center>";
+			$tool_content .= "<center><p><a href=\"". $safe_Self ."?a=1\">".$langReturnToAddFaculte."</a></p></center>";
 			}
 		// Check if faculty code already exists
 		elseif (mysql_num_rows(mysql_query("SELECT * from faculte WHERE code=" . autoquote($codefaculte))) > 0) {
 			$tool_content .= "<p>".$langFCodeExists."</p><br />";
-			$tool_content .= "<center><p><a href=\"$_SERVER[PHP_SELF]?a=1\">".$langReturnToAddFaculte."</a></p></center>";
+			$tool_content .= "<center><p><a href=\"". $safe_Self ."?a=1\">".$langReturnToAddFaculte."</a></p></center>";
 			}
 		// Check if faculty name already exists
 		elseif (mysql_num_rows(mysql_query("SELECT * from faculte WHERE name=" . autoquote($faculte))) > 0) {
 			$tool_content .= "<p>".$langFaculteExists."</p><br />";
-			$tool_content .= "<center><p><a href=\"$_SERVER[PHP_SELF]?a=1\">".$langReturnToAddFaculte."</a></p></center>";
+			$tool_content .= "<center><p><a href=\"". $safe_Self ."?a=1\">".$langReturnToAddFaculte."</a></p></center>";
 		} else {
 		// OK Create the new faculty
+			$safecodefaculte = htmlspecialchars($codefaculte);
+			$safefaculte = htmlspecialchars($faculte);
 			mysql_query("INSERT into faculte(code,name,generator,number) VALUES(" . autoquote($codefaculte) . ',' . autoquote($faculte) . ",'100','1000')")
 				or die ($langNoSuccess);
 			$tool_content .= "<p>".$langAddSuccess."</p><br />";
 			}
 	} else {
 		// Display form for new faculte information
-		$tool_content .= "<form method=\"post\" action=\"".$_SERVER['PHP_SELF']."?a=1\">";
+		$tool_content .= "<form method=\"post\" action=\"".$safe_self."?a=1\">";
 		$tool_content .= "<table width='99%' class='FormData'>
 		<tbody><tr>
 		<th width=\"220\">&nbsp;</th>
@@ -188,7 +194,7 @@ elseif ($a == 1)  {
 		</table>
 		</form>";
 	}
-	$tool_content .= "<br /><p align='right'><a href='$_SERVER[PHP_SELF]'>".$langBack."</a></p>";
+	$tool_content .= "<br /><p align='right'><a href='". $safe_Self ."'>".$langBack."</a></p>";
 }
 // Delete faculty
 elseif ($a == 2) {
@@ -204,7 +210,7 @@ elseif ($a == 2) {
 		mysql_query("DELETE from faculte WHERE id=$c");
 		$tool_content .= "<p>$langErase</p><br />";
 	}
-	$tool_content .= "<br><p align='right'><a href='$_SERVER[PHP_SELF]'>".$langBack."</a></p>";
+	$tool_content .= "<br><p align='right'><a href='". $safe_Self ."'>".$langBack."</a></p>";
 }
 // Edit a faculte
 elseif ($a == 3)  {
@@ -214,13 +220,13 @@ elseif ($a == 3)  {
                 $faculte = $_POST['faculte'];
 		if (empty($faculte)) {
 			$tool_content .= "<p>".$langEmptyFaculte."</p><br>";
-			$tool_content .= "<p align='right'><a href='$_SERVER[PHP_SELF]?a=3&c=$c'>$langReturnToEditFaculte</a></p>";
+			$tool_content .= "<p align='right'><a href='". $safe_Self ."?a=3&c=$c'>$langReturnToEditFaculte</a></p>";
 			}
 		// Check if faculte name already exists
 		elseif (mysql_num_rows(mysql_query("SELECT * from faculte WHERE id <> $c AND name=" .
                                                    autoquote($faculte))) > 0) {
 			$tool_content .= "<p>".$langFaculteExists."</p><br>";
-			$tool_content .= "<p align='right'><a href='$_SERVER[PHP_SELF]?a=3&amp;c=$c'>$langReturnToEditFaculte</a></p>";
+			$tool_content .= "<p align='right'><a href='". $safe_Self ."?a=3&amp;c=$c'>$langReturnToEditFaculte</a></p>";
 		} else {
 		// OK Update the faculte
 			mysql_query("UPDATE faculte SET name = " .
@@ -242,7 +248,7 @@ elseif ($a == 3)  {
 		$result = mysql_query($sql);
 		$myrow = mysql_fetch_array($result);
 		// Display form for edit faculte information
-		$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?a=3'>";
+		$tool_content .= "<form method='post' action='". $safe_Self ."?a=3'>";
 		$tool_content .= "<table width='99%' class='FormData'>
 		<tbody>
 		<tr>
@@ -267,7 +273,7 @@ elseif ($a == 3)  {
 		</table>
 		</form>";
 	}
-$tool_content .= "<br /><p align='right'><a href='$_SERVER[PHP_SELF]'>".$langBack."</a></p>";
+$tool_content .= "<br /><p align='right'><a href='". $safe_Self ."'>".$langBack."</a></p>";
 }
 
 /*****************************************************************************

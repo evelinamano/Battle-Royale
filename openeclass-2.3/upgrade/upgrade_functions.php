@@ -231,38 +231,25 @@ function update_assignment_submit()
 
 //Correction SQLi 
 function is_admin($username, $password, $mysqlMainDb) {
-    // Connect to the database
-    $conn = mysql_connect($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword']);
-    if (!$conn) {
-        die("Connection failed: " . mysql_error());
-    }
 
-    // Select the database
-    if (!mysql_select_db($mysqlMainDb, $conn)) {
-        die("Database selection failed: " . mysql_error());
-    }
+        mysql_select_db($mysqlMainDb);
+        $stmt = $mysqli->prepare(
+                "SELECT user.user_id FROM user
+                 JOIN admin ON admin.idUser = user.user_id
+                 WHERE user.username = ? AND user.password = ?"
+        );
+        $stmt->bind_param('ss', $username, $password);
+        $stmt->execute()
+        $r = $stmt->get_result();
 
-    // Escape inputs to avoid SQL injection (basic protection)
-    $username_escaped = mysql_real_escape_string($username);
-    $password_escaped = mysql_real_escape_string($password);
-
-    // Build and run query
-    $query = "SELECT user.user_id 
-              FROM user, admin 
-              WHERE admin.idUser = user.user_id 
-              AND user.username = '$username_escaped' 
-              AND user.password = '$password_escaped'";
-
-    $result = mysql_query($query, $conn);
-    if (!$result || mysql_num_rows($result) == 0) {
-        return FALSE;
-    } else {
-        $row = mysql_fetch_assoc($result);
-        $_SESSION['uid'] = $row['user_id'];
-        return TRUE;
-    }
+        if ($r->num_rows === 0) {
+                return FALSE;
+        } else {
+                $row = $r->fetch_assoc();
+                $_SESSION['uid'] = $row['user_id'];
+                return TRUE;
+        }
 }
-//End of SQLi Correction
 
 // Check whether an entry with the specified $define_var exists in the accueil table
 function accueil_tool_missing($define_var) {

@@ -30,10 +30,19 @@ $nameTools = $langUnregUser;
 $navigation[]= array ("url"=>"../profile/profile.php", "name"=> $langModifProfile);
 
 $tool_content = "";
-$uid = mysql_real_escape_string(intval($uid));
+
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token']  = md5(uniqid(mt_rand(), true));
+	
+
+}
 
 if (!isset($doit) or $doit != "yes") {
-	$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
+	// Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+    }
 	$tool_content .=  "<table width=99%><tbody>";
 	$tool_content .=  "<tr><td class=\"caution\">";
 
@@ -50,6 +59,7 @@ if (!isset($doit) or $doit != "yes") {
 			$tool_content .=  "<p><b>$langConfirm</b></p>";
 			$tool_content .=  "<ul class=\"listBullet\">";
 			$tool_content .=  "<li>$langYes: ";
+			$tool_content .=  "<input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>";
 			$tool_content .=  "<a href='$_SERVER[PHP_SELF]?u=$uid&doit=yes'>$langDelete</a>";
 			$tool_content .=  "</li>";
 			$tool_content .=  "<li>$langNo: <a href='../profile/profile.php'>$langBack</a>";
@@ -64,12 +74,6 @@ if (!isset($doit) or $doit != "yes") {
 	}  //endif is admin
 } else {
 	if (isset($uid)) {
-		if (empty($_POST['token']) || $_SESSION['token'] !== $_POST['token'] ) {
-			header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');
-			exit();
-		}
-		unset($_SESSION['token']);
-
 		$tool_content .=  "<table width=99%><tbody>";
 		$tool_content .=  "<tr>";
 		$tool_content .=  "<td class=\"success\">";

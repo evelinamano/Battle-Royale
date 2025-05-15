@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -137,8 +138,8 @@ function display_monthcalendar($agendaitems, $month, $year, $weekdaynames, $mont
   	//Start the week on monday
 	$startdayofweek = $dayone['wday']<>0 ? ($dayone['wday']-1) : 6;
 
-	$backwardsURL = "$_SERVER[PHP_SELF]?month=".($month==1 ? 12 : $month-1)."&year=".($month==1 ? $year-1 : $year);
-	$forewardsURL = "$_SERVER[PHP_SELF]?month=".($month==12 ? 1 : $month+1)."&year=".($month==12 ? $year+1 : $year);
+	$backwardsURL = "". $safe_Self ."?month=".($month==1 ? 12 : $month-1)."&year=".($month==1 ? $year-1 : $year);
+	$forewardsURL = "". $safe_Self ."?month=".($month==12 ? 1 : $month+1)."&year=".($month==12 ? $year+1 : $year);
 
 	$tool_content .=  "\n  <table width=99% class=\"DepTitle\">\n  <thead>";
   	$tool_content .=  "\n  <tr>";

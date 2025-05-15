@@ -1,3 +1,6 @@
+<?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 <?
 /*========================================================================
 *   Open eClass 2.3
@@ -124,7 +127,7 @@ if (isset($message) && !empty($message)) {
 if ($displayForm && (@$addAnnouce==1 || isset($modify))) {
         $displayAnnouncementList = false;
         // display add announcement command
-        $tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?localize=$localize'>";
+        $tool_content .= "<form method='post' action='". $safe_Self ."?localize=$localize'>";
         $tool_content .= "<table width='99%' class='FormData' align='left'><tbody>
                 <tr><th width='220'>&nbsp;</th><td><b>";
         if (isset($modify)) {
@@ -184,7 +187,7 @@ if ($displayAnnouncementList == true) {
         if (@$addAnnouce != 1) {
                 $tool_content .= "<div id='operations_container'>
                 <ul id='opslist'><li>";
-                $tool_content .= "<a href='".$_SERVER['PHP_SELF']."?addAnnouce=1&amp;localize=$localize'>".$langAdminAddAnn."</a>";
+                $tool_content .= "<a href='".$safe_self."?addAnnouce=1&amp;localize=$localize'>".$langAdminAddAnn."</a>";
                 $tool_content .= "</li></ul></div>";
         }
         if ($announcementNumber > 0) {
@@ -203,10 +206,10 @@ if ($displayAnnouncementList == true) {
                 $tool_content .=  "<tr class='odd' $stylerow>
                 <td colspan='3' class='right'>(".$langAdminAnnMes." <b>".nice_format($myrow['date'])."</b>)
                 &nbsp;&nbsp;
-                <a href='$_SERVER[PHP_SELF]?modify=$myrow[id]&amp;localize=$localize'>
+                <a href='". $safe_Self ."?modify=$myrow[id]&amp;localize=$localize'>
                 <img src='../../template/classic/img/edit.gif' title='$langModify' style='vertical-align:middle;' />
                 </a>&nbsp;
-                <a href='$_SERVER[PHP_SELF]?delete=$myrow[id]&amp;localize=$localize' onClick='return confirmation();'>
+                <a href='". $safe_Self ."?delete=$myrow[id]&amp;localize=$localize' onClick='return confirmation();'>
                 <img src='../../images/delete.gif' title='$langDelete' style='vertical-align:middle;' /></a>
                 </td></tr>";
                 $tool_content .= "<tr $stylerow>";

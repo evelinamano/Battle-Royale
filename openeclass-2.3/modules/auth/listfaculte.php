@@ -46,9 +46,10 @@ if (isset($result))  {
 			$tool_content .= "\n  <tr class=\"odd\">";
 		}
 		$tool_content .= "<td width='1'>
-		<img style='border:0px;' src='${urlServer}/template/classic/img/arrow_grey.gif' title='bullet'></td>
-		<td><a href='opencourses.php?fc=$fac[id]'>$fac[name]</a>&nbsp;&nbsp;<small>
-		<font style=\"color: #a33033;\">($fac[code])</font>";
+    	<img style='border:0px;' src='" . $urlServer . "/template/classic/img/arrow_grey.gif' title='bullet'></td>
+   	 	<td><a href='opencourses.php?fc=" . htmlspecialchars($fac['id']) . "'>" . htmlspecialchars($fac['name']) . "</a>&nbsp;&nbsp;<small>
+    	<font style=\"color: #a33033;\">(" . htmlspecialchars($fac['code']) . ")</font>";
+
 		$n=mysql_query("SELECT COUNT(*) FROM cours_faculte WHERE facid=$fac[id]");
 		$r=mysql_fetch_array($n);
 		$tool_content .= "<font style='color: #CAC3B5;'>&nbsp;&nbsp;-&nbsp;&nbsp;$langThereAre $r[0]&nbsp;".  ($r[0] == 1? $langAvCours: $langAvCourses) . "</small></td>

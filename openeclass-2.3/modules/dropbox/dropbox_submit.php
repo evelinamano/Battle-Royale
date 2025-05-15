@@ -1,4 +1,8 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -66,7 +70,7 @@ if (isset($_SESSION["dropbox_uniqueid"]) && isset($_GET["dropbox_unid"]) && $dro
 	} else {
 		$mypath = "http";
 	}
-	$mypath=$mypath."://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/index.php";
+	$mypath=$mypath."://".$_SERVER['HTTP_HOST'].dirname($safe_self)."/index.php";
 
 	header("Location: $mypath");
 }

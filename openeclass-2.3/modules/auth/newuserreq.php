@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -130,7 +131,7 @@ if (isset($_GET['lang'])) {
 $tool_content .= "<table width=\"99%\"><tbody>
    <tr>
     <td>
-    <form action='$_SERVER[PHP_SELF]' method='post'>
+    <form action='". $safe_Self ."' method='post'>
     <table border=0 cellpadding='1' cellspacing='2' border='0' width='100%' align=center>
 	<thead>
     <tr>

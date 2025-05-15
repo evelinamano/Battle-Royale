@@ -36,6 +36,7 @@
 
 // Initialise $tool_content
 $tool_content = "";
+session_start();
 include '../../include/baseTheme.php';
 include 'auth.inc.php';
 include('../../include/sendMail.inc.php');
@@ -53,8 +54,17 @@ function check_password_editable($password)
 		return true; // is editable
 	}
 }
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token'] = md5(uniqid(mt_rand(), true));
+}
 
 if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
+
+	// Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+    }
 	$userUID = (int)$_REQUEST['u'];
 	$hash = $_REQUEST['h'];
 	$res = db_query("SELECT `user_id`, `hash`, `password`, `datetime` FROM passwd_reset
@@ -110,25 +120,35 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == "go") {
 
 	$tool_content .= $lang_pass_intro;
 
-	$tool_content .= "<form method=\"post\" action=\"".$REQUEST_URI."\">
+	
+	
+	
+	$tool_content .= "<form method=\"post\" action=\"" . $_SERVER['REQUEST_URI'] . "\">
+		
 		<table>
-		<thead>
-		<tr><th>$lang_username: </th>
-		<td>
-		<input type=\"text\" name=\"userName\" size=\"40\" />
-		</td>
-		<tr>
-		<th>$lang_email: </th>
-		<td>
-		<input type=\"text\" name=\"email\" size=\"40\" />
-		</td>
-		</thead>
-		</table>
-		<br/>
-		<input type=\"submit\" name=\"doit\" value=\"".$lang_pass_submit."\" />
+			<thead>
+				<tr>
+					<th>$lang_username: </th>
+					<td><input type=\"text\" name=\"userName\" size=\"40\" /></td>
+				</tr>
+				<tr>
+					<th>$lang_email: </th>
+					<td><input type=\"text\" name=\"email\" size=\"40\" /></td>
+				</tr>
+			</thead>
+		</table><br/>
+		<input type='hidden' name='csrf_token' value=". $_SESSION['csrf_token'] ." />
+		<input type=\"submit\" name=\"doit\" value=\"$lang_pass_submit\" />
 	</form>";
+	
+
 
 } elseif (!isset($_REQUEST['do'])) {
+	// Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("CSRF token validation failed.");
+    }
+
 	/***** If valid e-mail address was entered, find user and send email *****/
 	$res = db_query("SELECT user_id, nom, prenom, username, password, statut FROM user
 			WHERE email = '" . mysql_escape_string($email) . "'

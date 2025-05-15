@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -75,5 +76,5 @@ if (isset($_POST['username'])) {
         }
 } 
 
-$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>$langUsername: <input type='text' name='username' /></form>";
+$tool_content .= "<form action='". $safe_Self ."' method='post'>$langUsername: <input type='text' name='username' /></form>";
 draw($tool_content,3,'admin');

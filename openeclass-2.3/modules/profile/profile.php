@@ -1,4 +1,7 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -32,12 +35,24 @@ include "../auth/auth.inc.php";
 $require_valid_uid = TRUE;
 $tool_content = "";
 
+session_start();
 check_uid();
 $nameTools = $langModifProfile;
 check_guest();
 $allow_username_change = !get_config('block-username-change');
+// Generate a CSRF token if it doesn't exist
+if (empty($_SESSION['csrf_token'])) {
+	$_SESSION['csrf_token']  = md5(uniqid(mt_rand(), true));
+	
+}
 
 if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
+	
+	// Validate the CSRF token
+	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+		die("CSRF token validation failed.");
+	}
+	
         if (!$allow_username_change) {
                 $username_form = $uname;
         }
@@ -50,29 +65,29 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 
 	// check if there are empty fields
 	if (empty($nom_form) OR empty($prenom_form) OR empty($username_form)) {
-		header("location:". $_SERVER['PHP_SELF']."?msg=4");
+		header("location:". $safe_self."?msg=4");
 		exit();
 	}
 
 	elseif (empty($email_form) and check_prof()) {
-		header("location:". $_SERVER['PHP_SELF']."?msg=4");
+		header("location:". $safe_self."?msg=4");
 		exit();
 	}
 
 	elseif (strstr($username_form, "'") or strstr($username_form, '"') or strstr($username_form, '\\')){
-		header("location:". $_SERVER['PHP_SELF']."?msg=10");
+		header("location:". $safe_self."?msg=10");
 		exit();
 	}
 
 	// check if username is free
 	elseif(isset($user_exist) AND ($username_form==$user_exist) AND ($username_form!=$uname)) {
-		header("location:". $_SERVER['PHP_SELF']."?msg=5");
+		header("location:". $safe_self."?msg=5");
 		exit();
 	}
 
 	// check if email is valid
 	elseif (!email_seems_valid($email_form) and check_prof()) {
-		header("location:". $_SERVER['PHP_SELF']."?msg=6");
+		header("location:". $safe_self."?msg=6");
 		exit();
 	}
 
@@ -91,7 +106,7 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
 			if (isset($_SESSION['user_perso_active']) and $persoStatus == "no") {
                 		unset($_SESSION['user_perso_active']);
 			}
-			header("location:". $_SERVER['PHP_SELF']."?msg=1");
+			header("location:". $safe_self."?msg=1");
 			exit();
 	        }
 	}
@@ -109,7 +124,7 @@ if (isset($submit) && isset($ldap_submit) && ($ldap_submit == "ON")) {
 		unset($_SESSION['user_perso_active']);
 	}
 
-	header("location:". $_SERVER['PHP_SELF']."?msg=1");
+	header("location:". $safe_self."?msg=1");
 	exit();
 }
 ##[END personalisation modification]############
@@ -211,6 +226,7 @@ $passurl = $urlSecure.'modules/profile/password.php';
 $authmethods = array("imap","pop3","ldap","db","shibboleth");
 
 if ((!isset($changePass)) || isset($_POST['submit'])) {
+
 	$tool_content .= "<div id=\"operations_container\"><ul id=\"opslist\">";
 	if(!in_array($password_form,$authmethods)) {
 		$tool_content .= "<li><a href=\"".$passurl."\">".$langChangePass."</a></li>";
@@ -302,6 +318,8 @@ if ((!isset($changePass)) || isset($_POST['submit'])) {
     </tr>
 	<tr>
       <th>&nbsp;</th>
+	  <input type='hidden' name='csrf_token' value=".$_SESSION['csrf_token'] .">
+
       <td><input type=\"Submit\" name=\"submit\" value=\"$langModify\"></td>
     </tr>
     </tbody>

@@ -84,8 +84,6 @@ $tool_content .= "<li><a href='newtopic.php?forum=$forum'>$langNewTopic</a></li>
 /*
 * Retrieve and present data from course's forum
 */
-//SQLi - Check parameters
-$forum = mysql_real_escape_string(intval($forum));
 
 $sql = "SELECT f.forum_type, f.forum_name
 	FROM forums f
@@ -145,11 +143,6 @@ if ($total_topics > $topics_per_page) { // navigation
 }
 
 if(isset($topicnotify)) { // modify topic notification
-	//SQLi - Check parameters
-	$topic_id = mysql_real_escape_string(intval($topic_id));
-	$cours_id = mysql_real_escape_string(intval($cours_id));
-	$uid = mysql_real_escape_string(intval($uid));
-	$topicnotify = mysql_real_escape_string(intval($topicnotify));
 	$rows = mysql_num_rows(db_query("SELECT * FROM forum_notify 
 		WHERE user_id = $uid AND topic_id = $topic_id AND course_id = $cours_id", $mysqlMainDb));
 	if ($rows > 0) {
