@@ -448,7 +448,7 @@ if(isset($modifyAnswers)) {
 
 $tool_content .= <<<cData
 
-    <form method="post" action="$_SERVER[PHP_SELF]?modifyAnswers=${modifyAnswers}">
+    <form method="post" action="". $safe_self ."?modifyAnswers=${modifyAnswers}">
     <input type="hidden" name="formSent" value="1" />
     <input type="hidden" name="nbrAnswers" value="${nbrAnswers}" />
 cData;
@@ -719,7 +719,7 @@ $tool_content .= <<<cData
 
 
   
-	<form method="post" action="$_SERVER[PHP_SELF]?modifyAnswers=${modifyAnswers}">
+	<form method="post" action="". $safe_self ."?modifyAnswers=${modifyAnswers}">
 	<input type="hidden" name="formSent" value="1" />
 	<input type="hidden" name="nbrOptions" value="${nbrOptions}" />
 	<input type="hidden" name="nbrMatches" value="${nbrMatches}" />

@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -150,7 +151,7 @@ foreach (array('previous', 'next') as $i) {
         if ($q and mysql_num_rows($q) > 0) {
                 list($q_id, $q_title) = mysql_fetch_row($q);
                 $q_title = htmlspecialchars($q_title);
-                $link[$i] = "<a href='$_SERVER[PHP_SELF]?id=$q_id'>$arrow1$q_title$arrow2</a>";
+                $link[$i] = "<a href='". $safe_self ."?id=$q_id'>$arrow1$q_title$arrow2</a>";
         } else {
                 $link[$i] = '&nbsp;';
         }
@@ -568,19 +569,19 @@ function actions($res_type, $resource_id, $status)
         $icon_vis = ($status == 'v')? 'visible.gif': 'invisible.gif';
 
         if ($status != 'del') {
-                $content = "<td width='3%'><a href='$_SERVER[PHP_SELF]?edit=$resource_id'>" .
+                $content = "<td width='3%'><a href='". $safe_self ."?edit=$resource_id'>" .
                 "<img src='../../template/classic/img/edit.gif' title='$langEdit' /></a></td>";
         } else {
                 $content = '<td width="3%">&nbsp;</td>';
         }
-        $content .= "<td width='3%'><a href='$_SERVER[PHP_SELF]?del=$resource_id'" .
+        $content .= "<td width='3%'><a href='". $safe_self ."?del=$resource_id'" .
                                         " onClick=\"return confirmation();\">" .
                                         "<img src='../../template/classic/img/delete.gif' " .
                                         "title='$langDelete'></img></a></td>";
 	 
 	if ($status != 'del') {
 		if ($res_type == 'text' or $res_type == 'video' or $res_type == 'forum' or $res_type == 'topic') { 
-			$content .= "<td width='3%'><a href='$_SERVER[PHP_SELF]?vis=$resource_id'>" .
+			$content .= "<td width='3%'><a href='". $safe_self ."?vis=$resource_id'>" .
                                         "<img src='../../template/classic/img/$icon_vis' " .
                                         "title='$langVisibility'></img></a></td>";
 		} else {
@@ -590,13 +591,13 @@ function actions($res_type, $resource_id, $status)
                 $content .= '<td width="3%">&nbsp;</td>';
         }
         if ($resource_id != $GLOBALS['max_resource_id']) {
-                $content .= "<td width='3%'><a href='$_SERVER[PHP_SELF]?down=$resource_id'>" .
+                $content .= "<td width='3%'><a href='". $safe_self ."?down=$resource_id'>" .
                         "<img src='../../template/classic/img/down.gif' title='$langDown'></img></a></td>";
 	} else {
 		$content .= "<td width='3%'>&nbsp;</td>";
 	}
         if (!$first) {
-                $content .= "<td width='3%'><a href='$_SERVER[PHP_SELF]?up=$resource_id'>" .
+                $content .= "<td width='3%'><a href='". $safe_self ."?up=$resource_id'>" .
                         "<img src='../../template/classic/img/up.gif' title='$langUp'></img></a></td>";
         } else {
                 $content .= "<td width='3%'>&nbsp;</td>";

@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -128,7 +129,7 @@ if (!@chdir("../config/")) {
 if (!isset($submit2)) {
         $closeregdefault = $close_user_registration? ' checked="checked"': '';
         // get old contact values
-        $tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>" .
+        $tool_content .= "<form action='". $safe_self ."' method='post'>" .
                 "<div class='kk'>" .
                 "<p>$langConfigFound" .
                 "<br />$langConfigMod</p>" .

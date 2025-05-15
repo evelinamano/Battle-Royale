@@ -1,4 +1,6 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -47,7 +49,7 @@ if(empty($search_terms_title) && empty($search_terms_keywords) && empty($search_
 		emfanish formas anahzthshs ean oi oroi anazhthshs einai kenoi
 ***********************************************************************************************/
 	$tool_content .= "
-    <form method=\"post\" action=\"$_SERVER[PHP_SELF]\">
+    <form method=\"post\" action=\"". $safe_self ."\">
 	<table width=\"99%\" class=\"FormData\" align=\"left\">
     <tbody>
 	<tr>

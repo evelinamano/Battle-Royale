@@ -1,4 +1,6 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -66,7 +68,7 @@ draw($tool_content, 2, 'admin');
 function form()
 {
   $ret = "
-  <form method='post' action='$_SERVER[PHP_SELF]'>
+  <form method='post' action='". $safe_self ."'>
 
   <table class=\"FormData\" width=\"99%\" align=\"left\">
   <tbody>

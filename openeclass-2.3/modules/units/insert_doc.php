@@ -92,7 +92,7 @@ function display_docs()
 				$dir = $entry['path'];
 				if ($is_dir) {
 					$image = '../../template/classic/img/folder.gif';
-					$file_url = "$_SERVER[PHP_SELF]?type=doc&amp;id=$id&amp;path=$dir";
+					$file_url = "". $safe_self ."?type=doc&amp;id=$id&amp;path=$dir";
 					$link_extra = '';
 					$link_text = $entry['name'];
 				} else {

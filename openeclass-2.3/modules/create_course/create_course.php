@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -71,7 +72,7 @@ hContent;
 
 $titulaire_probable="$prenom $nom";
 
-$tool_content .= "<form method='post' name='createform' action='$_SERVER[PHP_SELF]' onsubmit=\"return checkrequired(this, 'intitule', 'titulaires');\">";
+$tool_content .= "<form method='post' name='createform' action='". $safe_self ."' onsubmit=\"return checkrequired(this, 'intitule', 'titulaires');\">";
 
 // Import from BetaCMS Bridge
 doImportFromBetaCMSBeforeCourseCreation();

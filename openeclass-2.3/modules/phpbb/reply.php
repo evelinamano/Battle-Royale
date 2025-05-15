@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -220,7 +221,7 @@ if (isset($submit) && $submit) {
 } else {
 	// Private forum logic here.
 	if (($forum_type == 1) && !$user_logged_in && !$logging_in) {
-		$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+		$tool_content .= "<form action='". $safe_self ."' method='post'>
 		<table align='left' width='99%'>
 		<tr><td>
 		<table width='100%'><tr><td>$langPrivateNotice</td></tr>
@@ -259,7 +260,7 @@ if (isset($submit) && $submit) {
 	<ul id=\"opslist\">
 	<li><a href=\"viewtopic.php?topic=$topic&forum=$forum\" target=\"_blank\">$langTopicReview</a></li>
 	</ul></div><br />";
-	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+	$tool_content .= "<form action='". $safe_self ."' method='post'>
 	<table class=\"FormData\" width=\"99%\">
 	<tbody>
 	<tr>

@@ -1,4 +1,5 @@
 <?php 
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -203,7 +204,7 @@ if(@$_POST['questionNum']) {
       </tr>
       </thead>
       </table>
-      <form method="post" action="$_SERVER[PHP_SELF]" autocomplete="off">
+      <form method="post" action="". $safe_self ."" autocomplete="off">
       <input type="hidden" name="formSent" value="1">
       <input type="hidden" name="exerciseType" value="$exerciseType">
       <input type="hidden" name="questionNum" value="$questionNum">

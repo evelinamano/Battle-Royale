@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -237,9 +238,9 @@ cData;
 					}
 					if ($is_adminOfCourse)   {
 						$tool_content .= "<td align=center>".
-						"<a href='$_SERVER[PHP_SELF]?sdelete=yes&sid={$sid}' onClick='return confirmation();'>
+						"<a href='". $safe_Self ."?sdelete=yes&sid={$sid}' onClick='return confirmation();'>
 						<img src='../../template/classic/img/delete.gif' border='0' title='$langDelete'></a>&nbsp;".
-						"<a href='$_SERVER[PHP_SELF]?visibility=$visibility_func&sid={$sid}'>
+						"<a href='". $safe_Self ."?visibility=$visibility_func&sid={$sid}'>
 						<img src='../../template/classic/img/".$visibility_gif.".gif' border='0'></a>  ".
 							"</td></tr>\n";
 					} else {
@@ -375,9 +376,9 @@ cData;
 				$tool_content .= "\n        <td align='center'>
 				<a href='addpoll.php?edit=yes&pid=$pid'>
 				<img src='../../template/classic/img/edit.gif' title='$langEdit' border='0'></img></a>&nbsp;
-				<a href='$_SERVER[PHP_SELF]?delete=yes&pid=$pid' onClick='return confirmation();'>
+				<a href='". $safe_self ."?delete=yes&pid=$pid' onClick='return confirmation();'>
 				<img src='../../template/classic/img/delete.gif' title='$langDelete' border='0'></img></a>&nbsp;
-				<a href='$_SERVER[PHP_SELF]?visibility=$visibility_func&pid={$pid}'>
+				<a href='". $safe_self ."?visibility=$visibility_func&pid={$pid}'>
 				<img src='../../template/classic/img/".$visibility_gif.".gif' border='0' title=\"".$langVisible."\"></img></a></td>\n      </tr>";
 			} else {
 				$tool_content .= "\n      <td align='center'>";

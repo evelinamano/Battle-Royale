@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -214,7 +215,7 @@ if (isset($submit) && $submit) {
 		draw($tool_content, 2, 'phpbb', $head_content);
 		exit();
 	}
-	$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+	$tool_content .= "<form action='". $safe_self ."' method='post'>
 	<table class='FormData' width='99%'>
 	<tbody>
 	<tr>

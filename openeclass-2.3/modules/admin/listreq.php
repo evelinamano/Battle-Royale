@@ -90,9 +90,9 @@ switch ($show) {
       <div id='operations_container'>
         <ul id='opslist'>
 	  <li><a href='newuseradmin.php$linkget'>$linkreg</a></li>
-          <li><a href='". $safe_Self ."?show=closed$reqtype'>$langReqHaveClosed</a></li>
-          <li><a href='". $safe_Self ."?show=rejected$reqtype'>$langReqHaveBlocked</a></li>
-          <li><a href='". $safe_Self ."?show=accepted$reqtype'>$langReqHaveFinished</a></li>
+          <li><a href='". $safe_self ."?show=closed$reqtype'>$langReqHaveClosed</a></li>
+          <li><a href='". $safe_self ."?show=rejected$reqtype'>$langReqHaveBlocked</a></li>
+          <li><a href='". $safe_self ."?show=accepted$reqtype'>$langReqHaveFinished</a></li>
         </ul>
       </div>";
 
@@ -138,7 +138,7 @@ if (!empty($show) && ($show=="closed")) {
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_closed'])))."</small></td>";
             		$tool_content .= "<td>".$req['comment']."</td>";
 			$tool_content .= "<td align=center>
-			<a href='". $safe_Self ."?id=$req[rid]&show=closed$reqtype'>$langRestore</a></td>\n  </tr>";
+			<a href='". $safe_self ."?id=$req[rid]&show=closed$reqtype'>$langRestore</a></td>\n  </tr>";
 		$k++;
 		}
 	}
@@ -189,7 +189,7 @@ if (!empty($show) && ($show=="closed")) {
 				<small>".nice_format(date("Y-m-d", strtotime($req['date_closed'])))."</small></td>";
                 	$tool_content .= "<td>".$req['comment']."</td>";
 			$tool_content .= "<td align=center>
-			<a href='". $safe_Self ."?id=$req[rid]&show=closed$reqtype'>$langRestore</a>
+			<a href='". $safe_self ."?id=$req[rid]&show=closed$reqtype'>$langRestore</a>
 			</td></tr>";
 			$k++;
 		}
@@ -280,7 +280,7 @@ $langEmail: $emailhelpdesk";
 				FROM prof_request WHERE rid = '$id'");
 			$d = mysql_fetch_assoc($r);
                         $warning = ($d['statut'] == 5)? $langWarnReject: $langGoingRejectRequest;
-			$tool_content .= "<form action='". $safe_Self ."' method='post'>
+			$tool_content .= "<form action='". $safe_self ."' method='post'>
 			<table width='99%' class='FormData'>
 			<tbody><tr>
 			<th width='220'>&nbsp;</th>
@@ -351,8 +351,8 @@ else
 			<small>".nice_format(date("Y-m-d", strtotime($req['date_open'])))."</small></td>";
 		$tool_content .= "<td align='center'>$req[comment]</td>";
 		$tool_content .= "<td align='center'>
-		<a href='". $safe_Self ."?id=$req[rid]&amp;close=1$reqtype' onclick='return confirmation();'>$langClose</a><br />
-		<a href='". $safe_Self ."?id=$req[rid]&amp;close=2$reqtype'>$langRejectRequest</a>";
+		<a href='". $safe_self ."?id=$req[rid]&amp;close=1$reqtype' onclick='return confirmation();'>$langClose</a><br />
+		<a href='". $safe_self ."?id=$req[rid]&amp;close=2$reqtype'>$langRejectRequest</a>";
 		switch($req['profpassword']) {
 			case 'ldap': $tool_content .= "<br />
 					<a href='../auth/ldapnewprofadmin.php?id=".urlencode($req['rid'])."&amp;auth=4'>
@@ -381,7 +381,7 @@ else
 // If show is set then we return to listreq, else return to admin index.php
 //if (isset($close) or isset($closed)) {
 if (!empty($show)) {
-	$tool_content .= "<p align=\"right\"><a href=\"". $safe_Self ."\">$langBackRequests</a></p><br>";
+	$tool_content .= "<p align=\"right\"><a href=\"". $safe_self ."\">$langBackRequests</a></p><br>";
 }
 	$tool_content .= "<p align=\"right\"><a href=\"index.php\">$langBack</a></p>";
 draw($tool_content, 3, null, $head_content);

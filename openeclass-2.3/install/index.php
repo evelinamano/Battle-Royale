@@ -742,12 +742,12 @@ elseif (isset($_REQUEST['install1']) || isset($_REQUEST['back1']))
 	</tr>
 	<tr>
 	<td class=\"odd\" class=\"left\">$langChooseLang:</td>
-	<td><form name='langform' action='". $safe_Self ."' method=\"post\">".selection($langLanguages, 'lang', $lang, 'onChange="document.langform.submit();"')."</form></td>
+	<td><form name='langform' action='". $safe_self ."' method=\"post\">".selection($langLanguages, 'lang', $lang, 'onChange="document.langform.submit();"')."</form></td>
 	</tr>
 	<tr>
 	<td class=\"odd\" class=\"left\">&nbsp;</td>
 	<td>
-	<form action='". $safe_Self ."?alreadyVisited=1' method=\"post\">
+	<form action='". $safe_self ."?alreadyVisited=1' method=\"post\">
 	<input type=\"hidden\" name=\"welcomeScreen\" value=\"welcomeScreen\">
 	<input type=\"submit\" name=\"install1\" value=\"$langNextStep >\">
 	</form>

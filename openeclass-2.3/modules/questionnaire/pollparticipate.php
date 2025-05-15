@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -80,7 +81,7 @@ function printPollForm() {
 	if (($temp_CurrentDate >= $temp_StartDate) && ($temp_CurrentDate < $temp_EndDate)) {
 		$tool_content .= <<<cData
 	<p>
-	<form action="$_SERVER[PHP_SELF]" id="poll" method="post">
+	<form action="". $safe_self ."" id="poll" method="post">
 		<input type="hidden" value="2" name="UseCase">
 		<input type="hidden" value="$pid" name="pid">
 		

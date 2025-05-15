@@ -182,7 +182,7 @@ function course_details($code, $lang, $title, $desc, $fac, $vis, $prof, $type) {
 
         // display the restoring form
 	if (!$action) {
-		echo "<form action='$_SERVER[PHP_SELF]' method='post'>";
+		echo "<form action='". $safe_self ."' method='post'>";
   		echo "<table width='99%' class='FormData'><tbody>";
 		echo "<tr><td align='justify' colspan='2'>$langInfo1</td></tr>";
 		echo "<tr><td align='justify' colspan='2'>$langInfo2</td></tr>";

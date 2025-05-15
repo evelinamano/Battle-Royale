@@ -184,7 +184,7 @@ if ($countUser >= $endList) {
    <thead>
    <tr>
      <td valign='bottom' align='left' width='20%'>
-       <form method='post' action='$_SERVER[PHP_SELF]?numbList=begin'>
+       <form method='post' action='". $safe_self ."?numbList=begin'>
          <input type='submit' value='<< $langBegin' name='numbering' class='auth_input' />
        </form>
      </td>
@@ -193,14 +193,14 @@ if ($countUser >= $endList) {
 	// if beginning of list or complete listing, do not show "previous" button
 	if ($startList!=0) {
 		$tool_content .= "
-       <form method='post' action='$_SERVER[PHP_SELF]?startList=$startList&amp;numbList=less'>
+       <form method='post' action='". $safe_self ."?startList=$startList&amp;numbList=less'>
          <div align='center'><input type='submit' value='< $langPreced50 $endList' name='numbering' class='auth_input' /></div>
        </form>";
 	}
 	$tool_content .= "
      </td>
      <td valign='bottom' align='center' width='20%'>
-       <form method='post' action='$_SERVER[PHP_SELF]?startList=$startList&amp;numbList=all'>
+       <form method='post' action='". $safe_self ."?startList=$startList&amp;numbList=all'>
          <div align='center'><input type='submit' value='$langAll' name=numbering class='auth_input' /></div>
        </form>
      </td>
@@ -208,7 +208,7 @@ if ($countUser >= $endList) {
 
 	// if end of list  or complete listing, do not show "next" button
 	if (!((($countUser-$startList)<=$endList) OR ($endList==2000))) {
-		$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?startList=$startList&amp;numbList=more'>
+		$tool_content .= "<form method='post' action='". $safe_self ."?startList=$startList&amp;numbList=more'>
 		<div align='center'><input type='submit' value='$langFollow50 $endList >' name=numbering class='auth_input' /></div>
 		</form>";
 	}
@@ -216,7 +216,7 @@ if ($countUser >= $endList) {
      </td>
      <td valign='bottom' width='20%'>
        <div align='right'>
-       <form method='post' action='$_SERVER[PHP_SELF]?numbList=final'>
+       <form method='post' action='". $safe_self ."?numbList=final'>
          <input type='submit' value='$langEnd >>' name='numbering' class='auth_input' />
        </form>
        </div>
@@ -306,28 +306,28 @@ while ($myrow = mysql_fetch_array($result)) {
         if(isset($status) && ($status["$currentCourseID"]=='1' OR $status["$currentCourseID"]=='2')) {
                 // tutor right
                 if ($myrow['tutor'] == '0') {
-                        $tool_content .= "<td valign='top' align='center' class='add_user'><a href='$_SERVER[PHP_SELF]?giveTutor=$myrow[user_id]' title='$langGiveTutor'>$langAdd</a></td>";
+                        $tool_content .= "<td valign='top' align='center' class='add_user'><a href='". $safe_self ."?giveTutor=$myrow[user_id]' title='$langGiveTutor'>$langAdd</a></td>";
                 } else {
-                        $tool_content .= "<td class='highlight' align='center'>$langTutor<br /><a href='$_SERVER[PHP_SELF]?removeTutor=$myrow[user_id]' title='$langRemoveRight'>$langRemove</a></td>";
+                        $tool_content .= "<td class='highlight' align='center'>$langTutor<br /><a href='". $safe_self ."?removeTutor=$myrow[user_id]' title='$langRemoveRight'>$langRemove</a></td>";
                 }
 
                 // admin right
                 if ($myrow['user_id'] != $_SESSION["uid"]) {
                         if ($myrow['statut']=='1') {
-                                $tool_content .= "<td class='highlight' align='center'>$langAdministrator<br /><a href='$_SERVER[PHP_SELF]?removeAdmin=$myrow[user_id]' title='$langRemoveRight'>$langRemove</a></td>";
+                                $tool_content .= "<td class='highlight' align='center'>$langAdministrator<br /><a href='". $safe_self ."?removeAdmin=$myrow[user_id]' title='$langRemoveRight'>$langRemove</a></td>";
                         } else {
-                                $tool_content .= "<td valign='top' align='center' class='add_user'><a href='$_SERVER[PHP_SELF]?giveAdmin=$myrow[user_id]' title='$langGiveAdmin'>$langAdd</a></td>";
+                                $tool_content .= "<td valign='top' align='center' class='add_user'><a href='". $safe_self ."?giveAdmin=$myrow[user_id]' title='$langGiveAdmin'>$langAdd</a></td>";
                         }
                 } else {
                         if ($myrow['statut']=='1') {
                                 $tool_content .= "<td valign='top' class='highlight' align='center' title='$langAdmR'><b>$langAdministrator</b></td>";
                         } else {
-                                $tool_content .= "<td valign='top' align='center'><a href='$_SERVER[PHP_SELF]?giveAdmin=$myrow[user_id]'>$langGiveAdmin</a></td>";
+                                $tool_content .= "<td valign='top' align='center'><a href='". $safe_self ."?giveAdmin=$myrow[user_id]'>$langGiveAdmin</a></td>";
                         }
                 }
                 $tool_content .= "<td valign='top' align='center'>";
                 $alert_uname = $myrow['prenom'] . " " . $myrow['nom'];
-                $tool_content .= "<a href='$_SERVER[PHP_SELF]?unregister=$myrow[user_id]' onClick=\"return confirmation('".addslashes($alert_uname)."');\"><img src='../../template/classic/img/delete.gif' title='$langDelete' /></a>";
+                $tool_content .= "<a href='". $safe_self ."?unregister=$myrow[user_id]' onClick=\"return confirmation('".addslashes($alert_uname)."');\"><img src='../../template/classic/img/delete.gif' title='$langDelete' /></a>";
         }	// admin only
         $tool_content .= "</td></tr>";$i++;
 } 	// end of while
@@ -342,7 +342,7 @@ if($countUser>=50) {
 	<table width='99%' >
 	<tr>
 	<td valign='bottom' align='left' width='20%'>
-	<form method='post' action='$_SERVER[PHP_SELF]?numbList=begin'>
+	<form method='post' action='". $safe_self ."?numbList=begin'>
 	<input type='submit' value='<< $langBegin' name='numbering' class='auth_input' />
 	</form>
 	</td>
@@ -350,7 +350,7 @@ if($countUser>=50) {
 	
 	if ($startList!=0) {
 		$tool_content .= "
-		<form method='post' action='$_SERVER[PHP_SELF]?startList=$startList&amp;numbList=less'>
+		<form method='post' action='". $safe_self ."?startList=$startList&amp;numbList=less'>
 		<input type='submit' value='< $langPreced50 $endList' name='numbering' class='auth_input' />
 		</form>";
 	}
@@ -362,13 +362,13 @@ if($countUser>=50) {
 	</td>
 	<td valign='bottom' align='center' width='20%'>";
 	if (!((( $countUser-$startList ) <= 50) OR ($endList == 2000))) {
-		$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?startList=$startList&amp;numbList=more'>
+		$tool_content .= "<form method='post' action='". $safe_self ."?startList=$startList&amp;numbList=more'>
 		<input type='submit' value='$langFollow50 $endList >' name='numbering' class='auth_input' />
 		</form>";
 	}
 	$tool_content .= "</td>
 	<td valign='bottom' align='right' width='20%'>
-	<form method='post' action='$_SERVER[PHP_SELF]?numbList=final'>
+	<form method='post' action='". $safe_self ."?numbList=final'>
 	<input type='submit' value='$langEnd >>' name='numbering' class='auth_input' />
 	</form>
 	</td></tr></table>";

@@ -1,4 +1,5 @@
 <?php 
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -46,10 +47,10 @@ if($is_adminOfCourse)
 		if (($file_name != "") && ($file_size <= "$size" )) {
 
 		$file_name = str_replace(" ", "", $file_name);
-		$file_name = str_replace("é", "e", $file_name);
-		$file_name = str_replace("è", "e", $file_name);
-		$file_name = str_replace("ê", "e", $file_name);
-		$file_name = str_replace("à", "a", $file_name);
+		$file_name = str_replace("ï¿½", "e", $file_name);
+		$file_name = str_replace("ï¿½", "e", $file_name);
+		$file_name = str_replace("ï¿½", "e", $file_name);
+		$file_name = str_replace("ï¿½", "a", $file_name);
 
 		@copy("$file", "$updir/$file_name")
 		or die("<p>$langCouldNot</p></tr>");
@@ -91,7 +92,7 @@ if($is_adminOfCourse)
 else
 	{
 		$tool_content .=  "<p>$langExplanation</p>
-		<form method=\"POST\" action=\"$_SERVER[PHP_SELF]?submit=yes\" enctype=\"multipart/form-data\">
+		<form method=\"POST\" action=\"". $safe_self ."?submit=yes\" enctype=\"multipart/form-data\">
 		<table><thead><tr><th>$langSendPage :</th>
 		<td><input type=\"file\" name=\"file\" size=\"35\" accept=\"text/html\"></td>
 		</tr><tr><th>$langPgTitle :</th>

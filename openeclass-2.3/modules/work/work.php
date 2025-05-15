@@ -1,4 +1,6 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 /*===========================================================================
 /*========================================================================
 *   Open eClass 2.3
@@ -129,11 +131,6 @@ hContent;
 //-------------------------------------------
 // main program
 //-------------------------------------------
-
-//Check for SQLi
-if (isset($id)){
-	$id = mysql_real_escape_string(intval($id));
-}
 
 if ($is_adminOfCourse) {
 	if (isset($grade_comments)) {
@@ -310,7 +307,7 @@ function submit_work($id) {
 	$local_name = replace_dangerous_char($local_name);
 	if (preg_match('/\.(ade|adp|bas|bat|chm|cmd|com|cpl|crt|exe|hlp|hta|' .'inf|ins|isp|jse|lnk|mdb|mde|msc|msi|msp|mst|pcd|pif|reg|scr|sct|shs|' .'shb|url|vbe|vbs|wsc|wsf|wsh)$/', $_FILES['userfile']['name'])) {
 		$tool_content .= "<p class=\"caution_small\">$langUnwantedFiletype: {$_FILES['userfile']['name']}<br />";
-		$tool_content .= "<a href=\"$_SERVER[PHP_SELF]?id=$id\">$langBack</a></p><br />";
+		$tool_content .= "<a href=\"". $safe_self ."?id=$id\">$langBack</a></p><br />";
 		return;
 	}
 	$secret = work_secret($id);
@@ -456,7 +453,7 @@ function show_edit_assignment($id)
 
 	$description = q($row['description']);
 	$tool_content .= <<<cData
-    <form action="$_SERVER[PHP_SELF]" method="post" onsubmit="return checkrequired(this, 'title');">
+    <form action="". $safe_self ."" method="post" onsubmit="return checkrequired(this, 'title');">
     <input type="hidden" name="id" value="$id" />
     <input type="hidden" name="choice" value="do_edit" />
     <table width="99%" class="FormData">

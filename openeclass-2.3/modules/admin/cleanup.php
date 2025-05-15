@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
     <tr>
       <th width='220'>&nbsp;</th>
       <td>
-         <form method='post' action='". $safe_Self ."'>
+         <form method='post' action='". $safe_self ."'>
 	     <input type='submit' name='submit' value='$langCleanup'>
          </form>
       </td>

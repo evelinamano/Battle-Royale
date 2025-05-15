@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
                 $facs[$n['id']] = $n['name'];
         }
         $tool_content .= "$langMultiRegUserInfo
-<form method='post' action='". $safe_Self ."'>
+<form method='post' action='". $safe_self ."'>
 <table class='FormData'>
 <tr><th>$langMultiRegFields</th>
     <td><input type='text' name='fields' size='50' value='first last id email phone' /></td>

@@ -24,6 +24,7 @@
 *  			eMail: info@openeclass.org
 * =========================================================================*/
 // support for math symbols
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 include('../../include/phpmathpublisher/mathpublisher.php');
 
 // the exercise form has been submitted
@@ -75,7 +76,7 @@ else
 if(isset($modifyExercise))
 {
 
-	$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?modifyExercise=${modifyExercise}'>
+	$tool_content .= "<form method='post' action='". $safe_self ."?modifyExercise=${modifyExercise}'>
 	<table width='99%' class='FormData'><tbody>";
 
 	if(!empty($msgErr)) {
@@ -193,7 +194,7 @@ if(isset($modifyExercise))
 	$tool_content .= "<table width='99%' class='FormData'><tbody>
 	<tr>
 	<th width='220' class='left'>&nbsp;</th>
-	<td><b>$langInfoExercise</b>&nbsp;&nbsp;<a href='$_SERVER[PHP_SELF]?modifyExercise=yes'>
+	<td><b>$langInfoExercise</b>&nbsp;&nbsp;<a href='". $safe_self ."?modifyExercise=yes'>
 	<img src='../../template/classic/img/edit.gif' border='0' align='absmiddle' title='$langModify'></a>
 	</td></tr>
 	<tr>

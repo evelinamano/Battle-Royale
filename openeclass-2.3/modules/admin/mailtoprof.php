@@ -100,7 +100,7 @@ $langEmail : $emailhelpdesk
 } else {
         // Display form to administrator
         $tool_content .= "
-<form action='". $safe_Self ."' method='post'>
+<form action='". $safe_self ."' method='post'>
   <table class='FormData'>
   <tbody>
   <tr>

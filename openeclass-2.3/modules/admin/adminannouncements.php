@@ -127,7 +127,7 @@ if (isset($message) && !empty($message)) {
 if ($displayForm && (@$addAnnouce==1 || isset($modify))) {
         $displayAnnouncementList = false;
         // display add announcement command
-        $tool_content .= "<form method='post' action='". $safe_Self ."?localize=$localize'>";
+        $tool_content .= "<form method='post' action='". $safe_self ."?localize=$localize'>";
         $tool_content .= "<table width='99%' class='FormData' align='left'><tbody>
                 <tr><th width='220'>&nbsp;</th><td><b>";
         if (isset($modify)) {
@@ -206,10 +206,10 @@ if ($displayAnnouncementList == true) {
                 $tool_content .=  "<tr class='odd' $stylerow>
                 <td colspan='3' class='right'>(".$langAdminAnnMes." <b>".nice_format($myrow['date'])."</b>)
                 &nbsp;&nbsp;
-                <a href='". $safe_Self ."?modify=$myrow[id]&amp;localize=$localize'>
+                <a href='". $safe_self ."?modify=$myrow[id]&amp;localize=$localize'>
                 <img src='../../template/classic/img/edit.gif' title='$langModify' style='vertical-align:middle;' />
                 </a>&nbsp;
-                <a href='". $safe_Self ."?delete=$myrow[id]&amp;localize=$localize' onClick='return confirmation();'>
+                <a href='". $safe_self ."?delete=$myrow[id]&amp;localize=$localize' onClick='return confirmation();'>
                 <img src='../../images/delete.gif' title='$langDelete' style='vertical-align:middle;' /></a>
                 </td></tr>";
                 $tool_content .= "<tr $stylerow>";

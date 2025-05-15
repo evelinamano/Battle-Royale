@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -165,7 +166,7 @@ function printPollCreationForm() {
 		$pidvar = '';
 	}
 	$tool_content .= "
-    <form action='$_SERVER[PHP_SELF]' id='poll' method='post'>";
+    <form action='". $safe_self ."' id='poll' method='post'>";
     /*
     $tool_content .= "$pidvar
 		<div id=\"operations_container\">

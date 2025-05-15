@@ -110,7 +110,7 @@ if ($all_set) {
 
         $tool_content .= "
 <p>$langInfoStudReq</p><br />
-<form action='". $safe_Self ."' method='post'>
+<form action='". $safe_self ."' method='post'>
 <table width='99%' style='border: 1px solid #edecdf;'>
 <thead>
 <tr>

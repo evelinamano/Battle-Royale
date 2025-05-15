@@ -244,7 +244,7 @@ if ($is_adminOfCourse){
 
 	if(isset($submit) &&  @$action == 2) {
 		if (($link == "http://") or ($link == "ftp://") or empty($link) or empty($name_link))  {
-			$tool_content .= "<p class=\"caution_small\">$langInvalidLink<br /><a href=\"$_SERVER[PHP_SELF]?action=2\">$langHome</a></p><br />";
+			$tool_content .= "<p class=\"caution_small\">$langInvalidLink<br /><a href=\"". $safe_self ."?action=2\">$langHome</a></p><br />";
 			draw($tool_content, 2, 'course_tools');
 			exit();
 		}
@@ -308,7 +308,7 @@ if ($is_adminOfCourse){
 
 			$tool_content .= "<p class=\"success_small\">$langOkSent</p><br/>";
 		} else {
-			$tool_content .= "<p class=\"caution_small\">$langTooBig<br /><a href=\"$_SERVER[PHP_SELF]?action=1\">$langHome</a></p><br />";
+			$tool_content .= "<p class=\"caution_small\">$langTooBig<br /><a href=\"". $safe_self ."?action=1\">$langHome</a></p><br />";
 			draw($tool_content, 2, 'course_tools');
 		}	// else
 		unset($action);
@@ -322,7 +322,7 @@ if ($is_adminOfCourse && @$action == 1) {//upload html file
 	$navigation[]= array ("url"=>"course_tools.php", "name"=> $langToolManagement);
 	$helpTopic = 'Import';
 
-	$tool_content .= "<form method=\"POST\" action=\"$_SERVER[PHP_SELF]?submit=yes&action=1\" enctype=\"multipart/form-data\">
+	$tool_content .= "<form method=\"POST\" action=\"". $safe_self ."?submit=yes&action=1\" enctype=\"multipart/form-data\">
 	<p>$langExplanation_0</p>
 	<p>$langExplanation_3</p>
 	<br />
@@ -361,7 +361,7 @@ if ($is_adminOfCourse && @$action == 2) {//add external link
 	$navigation[]= array ("url"=>"course_tools.php", "name"=> $langToolManagement);
 	$helpTopic = 'Module';
 
-	$tool_content .=  "<form method=\"post\" action=\"$_SERVER[PHP_SELF]?submit=yes&action=2\">
+	$tool_content .=  "<form method=\"post\" action=\"". $safe_self ."?submit=yes&action=2\">
 	<br>
 	<table width=\"99%\" align='left' class='FormData'>
 	<tbody>
@@ -440,7 +440,7 @@ if ($is_adminOfCourse) {
 	</div>";
 
 	$tool_content .= <<<tForm
-<form name="courseTools" action="$_SERVER[PHP_SELF]" method="post" enctype="multipart/form-data">
+<form name="courseTools" action="". $safe_self ."" method="post" enctype="multipart/form-data">
   <br/>
   <table class="FormData" align="center" width="99%" style="border: 1px solid #CAC3B5;">
   <thead>

@@ -303,7 +303,7 @@ hContent;
 
     if ($announcementNumber > 1 || isset($_POST['submitAnnouncement'])) {
         $tool_content .= "
-          <li><a href='". $safe_Self ."?deleteAllAnnouncement=1' onClick='return confirmation('all');'>$langEmptyAnn</a></li>";
+          <li><a href='". $safe_self ."?deleteAllAnnouncement=1' onClick='return confirmation('all');'>$langEmptyAnn</a></li>";
     }
     $tool_content .= "
         </ul>
@@ -316,7 +316,7 @@ hContent;
     if ($displayForm and
         (isset($_GET['addAnnouce']) or isset($_GET['modify']))) {
         // DISPLAY ADD ANNOUNCEMENT COMMAND
-        $tool_content .= "<form method='post' action='". $safe_Self ."' onsubmit=\"return checkrequired(this, 'antitle');\">";
+        $tool_content .= "<form method='post' action='". $safe_self ."' onsubmit=\"return checkrequired(this, 'antitle');\">";
         // should not send email if updating old message
         if (isset ($modify) && $modify) {
             $tool_content .= "
@@ -416,9 +416,9 @@ hContent;
             $tool_content .= "</b>&nbsp;<small>(" . $myrow['temps'] . ")</small>
             <br />".$content."</td>
         <td width='70' class='right'>
-        <a href='". $safe_Self ."?modify=" . $myrow['id'] . "'>
+        <a href='". $safe_self ."?modify=" . $myrow['id'] . "'>
         <img src='../../template/classic/img/edit.gif' title='" . $langModify . "' /></a>
-        <a href='". $safe_Self ."?delete=" . $myrow['id'] . "' onClick=\"return confirmation('');\">
+        <a href='". $safe_self ."?delete=" . $myrow['id'] . "' onClick=\"return confirmation('');\">
         <img src='../../template/classic/img/delete.gif' title='" . $langDelete . "' /></a>
         </td>";
 
@@ -428,11 +428,11 @@ hContent;
            // DISPLAY MOVE UP COMMAND
             // condition: only if it is not the top announcement
 	if ($iterator != 1)  {
-		$tool_content .= "<a href='". $safe_Self ."?up=" . $myrow["id"] . "'><img class='displayed' src='../../template/classic/img/up.gif' title='" . $langUp . "' /></a>";
+		$tool_content .= "<a href='". $safe_self ."?up=" . $myrow["id"] . "'><img class='displayed' src='../../template/classic/img/up.gif' title='" . $langUp . "' /></a>";
 	}
         // DISPLAY MOVE DOWN COMMAND
 	if ($iterator < $bottomAnnouncement) {
-		$tool_content .= "<a href='". $safe_Self ."?down=" . $myrow["id"] . "'><img class='displayed' src='../../template/classic/img/down.gif' title='" . $langDown . "' /></a>";
+		$tool_content .= "<a href='". $safe_self ."?down=" . $myrow["id"] . "'><img class='displayed' src='../../template/classic/img/down.gif' title='" . $langDown . "' /></a>";
 	}
 	if ($announcementNumber > 1) {
 		$tool_content .= "</td>";

@@ -62,7 +62,7 @@ hContent;
 if (isset($_POST['submit'])) {
         if (empty($_POST['title'])) {
                 $tool_content .= "<p class='caution_small'>$langNoCourseTitle<br />
-                                  <a href='$_SERVER[PHP_SELF]'>$langAgain</a></p><br />";
+                                  <a href='". $safe_self ."'>$langAgain</a></p><br />";
         } else {
                 if (isset($_POST['localize'])) {
                         $newlang = $language = langcode_to_name($_POST['localize']);
@@ -166,7 +166,7 @@ if (isset($_POST['submit'])) {
 		$checkpasssel = empty($password)? '': " checked='1'";
 
 		@$tool_content .="
-		<form method='post' action='$_SERVER[PHP_SELF]'>
+		<form method='post' action='". $safe_self ."'>
 		<table width='99%' align='left'>
 		<thead><tr>
 		<td>

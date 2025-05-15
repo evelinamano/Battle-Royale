@@ -59,7 +59,7 @@ $lang = langname_to_code($language);
 // display form
 if (!isset($submit)) {
 	// Main body
-	@$tool_content .= "<form action='". $safe_Self ."' method='post'>
+	@$tool_content .= "<form action='". $safe_self ."' method='post'>
 	<table width='99%' style='border: 1px solid #edecdf;'>
 	<thead>
 	<tr>
@@ -239,7 +239,7 @@ if (!isset($submit)) {
 		foreach ($registration_errors as $error) {
 			$tool_content .= "<p>$error</p>";
 		}
-		$tool_content .= "<p><a href='". $safe_Self ."?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .
+		$tool_content .= "<p><a href='". $safe_self ."?prenom_form=$_POST[prenom_form]&nom_form=$_POST[nom_form]&uname=$_POST[uname]&email=$_POST[email]&am=$_POST[am]'>$langAgain</a></p>" .
 					"</td></tr></tbody></table><br /><br />";
 	}
 

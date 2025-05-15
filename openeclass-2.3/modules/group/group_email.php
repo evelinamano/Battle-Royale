@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -81,7 +82,7 @@ if ($is_adminOfCourse or $is_tutor)  {
 
 		$tool_content .= <<<tCont
 
-  <form action="$_SERVER[PHP_SELF]" method="post">
+  <form action="". $safe_self ."" method="post">
   <input type="hidden" name="userGroupId" value="$userGroupId">
     <table width="99%" class="FormData">
     <thead>

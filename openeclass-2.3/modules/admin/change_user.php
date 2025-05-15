@@ -76,5 +76,5 @@ if (isset($_POST['username'])) {
         }
 } 
 
-$tool_content .= "<form action='". $safe_Self ."' method='post'>$langUsername: <input type='text' name='username' /></form>";
+$tool_content .= "<form action='". $safe_self ."' method='post'>$langUsername: <input type='text' name='username' /></form>";
 draw($tool_content,3,'admin');

@@ -66,13 +66,13 @@ if($submit) {
 	// check if there are empty fields
 	if (!$all_set) {
 		$tool_content .= "<p class='caution_small'>$langEmptyFields</p>
-			<br><br><p align='right'><a href='". $safe_Self ."'>$langAgain</a></p>";
+			<br><br><p align='right'><a href='". $safe_self ."'>$langAgain</a></p>";
 	} elseif ($user_exist) {
 		$tool_content .= "<p class='caution_small'>$langUserFree</p>
-			<br><br><p align='right'><a href='". $safe_Self ."'>$langAgain</a></p>";
+			<br><br><p align='right'><a href='". $safe_self ."'>$langAgain</a></p>";
 	} elseif(!email_seems_valid($email_form)) {
 		$tool_content .= "<p class='caution_small'>$langEmailWrong.</p>
-			<br><br><p align='right'><a href='". $safe_Self ."'>$langAgain</a></p>";
+			<br><br><p align='right'><a href='". $safe_self ."'>$langAgain</a></p>";
 	} else {
                 $registered_at = time();
 		$expires_at = time() + $durationAccount;
@@ -150,7 +150,7 @@ $langEmail : $emailhelpdesk
                 $title = $langNewProf;
         }
 
-	$tool_content .= "<form action='". $safe_Self ."' method='post'>
+	$tool_content .= "<form action='". $safe_self ."' method='post'>
 	<table width='99%' align='left' class='FormData'>
 	<tbody><tr>
 	<th width='220'>&nbsp;</th>

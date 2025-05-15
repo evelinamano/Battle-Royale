@@ -110,7 +110,7 @@ if($is_adminOfCourse) {
 	
 	$tool_content .= "</li></ul></div>";
 
-	$tool_content .= "<form method='get' action='$_SERVER[PHP_SELF]'>";
+	$tool_content .= "<form method='get' action='". $safe_self ."'>";
 	if (isset($fromExercise)) {
 		$tool_content .= "<input type='hidden' name='fromExercise' value='$fromExercise'>";
 	}
@@ -254,7 +254,7 @@ if($is_adminOfCourse) {
 				"&page=".$prevpage."\">".$langPreviousPage."</a></small>";
 			} else {
 				$tool_content .= "<small>&lt;&lt; 
-				<a href='$_SERVER[PHP_SELF]?page=$prevpage'>$langPreviousPage</a></small>";
+				<a href='". $safe_self ."?page=$prevpage'>$langPreviousPage</a></small>";
 			}
 		}
 		if ($page < $numpages) {
@@ -267,7 +267,7 @@ if($is_adminOfCourse) {
 				"</a> &gt;&gt;</small>";
 			} else {
 				$tool_content .= "<small>
-				<a href='$_SERVER[PHP_SELF]?page=$nextpage'>$langNextPage</a> &gt;&gt;
+				<a href='". $safe_self ."?page=$nextpage'>$langNextPage</a> &gt;&gt;
 				</small>";
 			}
 		}

@@ -1,4 +1,6 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -237,7 +239,7 @@ if ($is_adminOfCourse) { // course admin
 	
 		if (($myrow["forum_type"] == 1) && !$user_logged_in && !$logging_in) {
 			// Private forum, no valid session, and login form not submitted...
-			$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+			$tool_content .= "<form action='". $safe_self ."' method='post'>
 			<table width='99%'>
 			<tr><td>$langPrivateNotice</td></tr>
 			<tr><td>
@@ -316,7 +318,7 @@ if ($is_adminOfCourse) { // course admin
 		</ul>
 		</div>
 		<br />";
-		$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
+		$tool_content .= "<form action='". $safe_self ."' method='post'>
 		<table class='FormData' width='99%'>
 		<tbody>
 		<tr>

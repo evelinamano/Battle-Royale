@@ -91,7 +91,7 @@ if((!empty($u)) && ctype_digit($u) )	// validate the user id
     </ul>
   </div>";
 		$tool_content .= "
-<form name='edituser' method='post' action='". $safe_Self ."'>
+<form name='edituser' method='post' action='". $safe_self ."'>
   <table class='FormData' width='99%' align='left'>
   <tbody>
   <tr>
@@ -333,14 +333,14 @@ if (mysql_num_rows($username_check) > 1) {
   if (empty($fname) OR empty($lname) OR empty($username)) {
 	$tool_content .= "<table width='99%'><tbody><tr>
         <td class='caution' height='60'><p>$langEmptyFields</p>
-	<p><a href='". $safe_Self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
+	<p><a href='". $safe_self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
 	draw($tool_content, 3, ' ', $head_content);
 	    exit();
 	}
  	 elseif(isset($user_exist) AND $user_exist == TRUE) {
 		$tool_content .= "<table width='99%'><tbody><tr>
           	<td class='caution' height='60'><p>$langUserFree</p>
-		<p><a href='". $safe_Self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
+		<p><a href='". $safe_self ."'>$langAgain</a></p></td></tr></tbody></table><br /><br />";
 		draw($tool_content, 3, ' ', $head_content);
 	    exit();
   }

@@ -141,7 +141,7 @@ if ($submit)  {
 		$lang = $res['lang'];
 	}
 
-	$tool_content .= "<form action='". $safe_Self ."' method='post'>
+	$tool_content .= "<form action='". $safe_self ."' method='post'>
 	<table width='99%' class='FormData'>
 	<tbody>
 	<tr>

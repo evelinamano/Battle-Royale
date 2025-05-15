@@ -123,7 +123,7 @@ draw($tool_content, 3);
 function mes($message, $urlText, $type) {
 	global $urlServer, $langBack, $userid;
 
- 	$str = "<p class='$type'>$message<br /><a href='$urlServer'>$urlText</a><br /><a href='". $safe_Self ."?userid=$userid'>$langBack</a></p><br />";
+ 	$str = "<p class='$type'>$message<br /><a href='$urlServer'>$urlText</a><br /><a href='". $safe_self ."?userid=$userid'>$langBack</a></p><br />";
 	return $str;
 }
 

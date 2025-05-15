@@ -437,7 +437,7 @@ function form_dir_list_exclude($dbTable, $sourceType, $sourceComponent, $command
                 $groupset = '';
         }
 	$dirList = index_and_sort_dir($baseWorkDir);
-	$dialogBox .= "<form action=' ". $safe_Self ." $groupset' method='post'>\n";
+	$dialogBox .= "<form action=' ". $safe_self ." $groupset' method='post'>\n";
 	$dialogBox .= "<input type='hidden' name='".$sourceType."' value='".$sourceComponent."'>\n";
 	$dialogBox .="<table class='FormData' width='99%'>
         	<tbody><tr><th class='left' width='200'>$langMove:</th>

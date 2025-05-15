@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*===========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -193,21 +194,21 @@ while ($cu = mysql_fetch_array($sql)) {
                         $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\">".
                                 "<a href='../../modules/units/info.php?edit=$cu[id]'>" .
                                 "<img src='../../template/classic/img/edit.gif' title='$langEdit' /></a></td>" .
-                                "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='$_SERVER[PHP_SELF]?del=$cu[id]' " .
+                                "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='". $safe_self ."?del=$cu[id]' " .
                                 "onClick=\"return confirmation();\">" .
                                 "<img src='../../template/classic/img/delete.gif' " .
                                 "title='$langDelete'></img></a></td>" .
-                                "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='$_SERVER[PHP_SELF]?vis=$cu[id]'>" .
+                                "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='". $safe_self ."?vis=$cu[id]'>" .
                                 "<img src='../../template/classic/img/$icon_vis' " .
                                 "title='$langVisibility'></img></a></td>";
                         if ($cu['id'] != $last_id) {
-                                $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='$_SERVER[PHP_SELF]?down=$cu[id]'>" .
+                                $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='". $safe_self ."?down=$cu[id]'>" .
                                 "<img src='../../template/classic/img/down.gif' title='$langDown'></img></a></td>";
                         } else {
                                 $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
                         }
                         if (!$first) {
-                                $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='$_SERVER[PHP_SELF]?up=$cu[id]'><img src='../../template/classic/img/up.gif' title='$langUp'></img></a></td>";
+                                $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\"><a href='". $safe_self ."?up=$cu[id]'><img src='../../template/classic/img/up.gif' title='$langUp'></img></a></td>";
                         } else {
                                 $cunits_content .= "\n        <td width='2%' style=\"border-bottom: 1px solid #CAC3B5;\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
                         }

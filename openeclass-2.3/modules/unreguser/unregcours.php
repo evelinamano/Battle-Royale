@@ -1,4 +1,5 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -60,7 +61,7 @@ if (!isset($doit) or $doit != "yes") {
 	<ul class='listBullet'>
 	<li>$langYes: 
         <input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>
-	<a href='$_SERVER[PHP_SELF]?u=$uid&amp;cid=$cid&amp;doit=yes' class=mainpage>$langUnregCours</a>
+	<a href='". $safe_self ."?u=$uid&amp;cid=$cid&amp;doit=yes' class=mainpage>$langUnregCours</a>
 	</li>
 	<li>$langNo: <a href='../../index.php' class=mainpage>$langBack</a>
 	</li></ul>

@@ -1,4 +1,5 @@
 <?php
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -83,7 +84,7 @@ else {
 		|| empty($_POST[BCMS_HOST]) || empty($_POST[BCMS_REPO]) 
 		|| empty($_POST[BCMS_USER]) || empty($_POST[BCMS_PASS]) ) {
 		$tool_content .= "<p class=\"caution_small\">$langEmptyFields</p>
-			<br/><br/><p align=\"right\"><a href='$_SERVER[PHP_SELF]'>$langAgain</a></p>";
+			<br/><br/><p align=\"right\"><a href='". $safe_self ."'>$langAgain</a></p>";
 	}
 	else {
 		$repo = array(
@@ -99,7 +100,7 @@ else {
 			$tool_content .= "<p class=\"caution_small\">".
 				$GLOBALS['langFailConnectBetaCMSBridge'].
 				"</p>".
-				"<br/><br/><p align=\"right\"><a href='$_SERVER[PHP_SELF]'>$langAgain</a></p>";
+				"<br/><br/><p align=\"right\"><a href='". $safe_self ."'>$langAgain</a></p>";
 			draw($tool_content,3);
 			die();
 		}
@@ -162,7 +163,7 @@ draw($tool_content,3);
 // HELPER FUNCTIONS
 
 function repoForm() {
-	return "<form action='$_SERVER[PHP_SELF]' method='post'>
+	return "<form action='". $safe_self ."' method='post'>
 	<table width='99%' align='left' class='FormData'>
 	<tbody><tr>
 	<th width='220'>&nbsp;</th>

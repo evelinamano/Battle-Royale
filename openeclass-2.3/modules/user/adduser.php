@@ -1,4 +1,6 @@
 <?
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -56,7 +58,7 @@ if (isset($add)) {
 
 } else {
 
-	$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]'>";
+	$tool_content .= "<form method='post' action='". $safe_self ."'>";
 
 if(!isset($search_nom)) $search_nom = "";
 if(!isset($search_prenom)) $search_prenom = "";
@@ -138,7 +140,7 @@ tCont3;
 				$tool_content .= "<td align=\"right\">$i.</td><td>$myrow[prenom]</td>
       				<td>$myrow[nom]</td><td>$myrow[username]</td>
       				<td align=\"center\">
-				<a href=\"$_SERVER[PHP_SELF]?add=$myrow[user_id]\">$langRegister</a></td></tr>\n";
+				<a href=\"". $safe_self ."?add=$myrow[user_id]\">$langRegister</a></td></tr>\n";
 				$i++;
 			}
 			$tool_content .= "</tbody>";

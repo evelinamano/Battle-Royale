@@ -25,6 +25,7 @@
 * =========================================================================*/
 
 // the question form has been submitted
+$safe_self = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 if(isset($submitQuestion)) {
 	$questionName = trim($questionName);
 	$questionDescription = trim($questionDescription);
@@ -113,7 +114,7 @@ else
 if(isset($newQuestion) || isset($modifyQuestion)) {
 	// is picture set ?
 	$okPicture = file_exists($picturePath.'/quiz-'.$questionId)?true:false;
-	@$tool_content .= "<form enctype='multipart/form-data' method='post' action='$_SERVER[PHP_SELF]?modifyQuestion=$modifyQuestion&newQuestion=$newQuestion'>
+	@$tool_content .= "<form enctype='multipart/form-data' method='post' action='". $safe_self ."?modifyQuestion=$modifyQuestion&newQuestion=$newQuestion'>
 	<table width=\"99%\" class=\"FormData\"><tbody>";
 
 	// if there is an error message
