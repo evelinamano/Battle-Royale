@@ -64,11 +64,8 @@ if (!isset($doit) or $doit != "yes") {
 			$tool_content .=  "<ul class=\"listBullet\">";
 			$tool_content .=  "<li>$langYes: ";
 			$tool_content .=  "<input type='hidden' name='csrf_token' value='{$_SESSION['csrf_token']}'>";
-<<<<<<< HEAD
 			$tool_content .=  "<a href='". $safe_self ."?u=$uid&doit=yes'>$langDelete</a>";
-=======
-			$tool_content .=  "<a href=;'". htmlspecialchars($_SERVER[PHP_SELF]) ."?u=$uid&doit=yes'>$langDelete</a>";
->>>>>>> 39ef92d (changes for SQLi)
+			$tool_content .=  "<a href='". htmlspecialchars($_SERVER[PHP_SELF]) ."?u=$uid&doit=yes'>$langDelete</a>";
 			$tool_content .=  "</li>";
 			$tool_content .=  "<li>$langNo: <a href='../profile/profile.php'>$langBack</a>";
 			$tool_content .=  "</li></ul>";

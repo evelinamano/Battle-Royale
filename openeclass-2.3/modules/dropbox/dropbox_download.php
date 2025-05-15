@@ -83,7 +83,7 @@ require_once("mime.inc.php");
 $fileparts = explode( '.', $file);
 $filepartscount = count( $fileparts);
 
-if (($filepartscount > 1) && isset($mimetype[$fileparts [$filepartscount - 1]]))
+/*if (($filepartscount > 1) && isset($mimetype[$fileparts [$filepartscount - 1]]))
 { 
     // give hint to browser about filetype
     header( "Content-type: " . $mimetype[$fileparts [$filepartscount - 1]] . "\n");
@@ -94,7 +94,11 @@ else
 	//no information about filetype: force a download dialog window in browser
 	header( "Content-type: application/octet-stream\n");
 	header( "Content-Disposition: inline; filename=$file\n");
-}
+}*/
+
+//Check for RFI
+header( "Content-type: application/octet-stream\n");
+header( "Content-Disposition: inline; filename=$file\n");
 
 /**
  * Note that if you use these two headers from a previous example:

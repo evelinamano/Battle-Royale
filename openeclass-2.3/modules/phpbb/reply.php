@@ -74,8 +74,12 @@ hContent;
 
 include_once("./config.php");
 include("functions.php");
+//Check for SQLi
+$forum = mysql_real_escape_string(intval($forum));
+$topic = mysql_real_escape_string(intval($topic));
 
 if (isset($post_id) && $post_id) {
+	$post_id = mysql_real_escape_string(intval($post_id));
 	// We have a post id, so include that in the checks..
 	$sql  = "SELECT f.forum_type, f.forum_name, f.forum_access, t.topic_title ";
 	$sql .= "FROM forums f, topics t, posts p ";
@@ -167,6 +171,18 @@ if (isset($submit) && $submit) {
 	if (isset($sig) && $sig) {
 		$message .= "\n[addsig]";
 	}
+// Check for SQLi
+	$mysqli = new mysqli($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword'], $currentCourseID);
+	if ($mysqli->connect_error) { die("Connection failed: " . $mysqli->connect_error); }
+	if (!$mysqli->set_charset("utf8")) { printf("Error loading character set utf8: %s\n", $mysqli->error); exit(); }
+
+	$stmt1 = $mysqli->prepare("INSERT INTO posts (topic_id, forum_id, poster_id, post_time, poster_ip, nom, prenom) VALUES (?, ?, ?, ?, ?, ?, ?)");
+	$stmt1->bind_param("sssssss", $topic, $forum, $uid,$time, $poster_ip, $nom, $prenom);
+	$stmt1->execute();
+	$this_post = $stmt1->insert_id;
+	$stmt1->close();
+
+
 	$sql = "INSERT INTO posts (topic_id, forum_id, poster_id, post_time, poster_ip, nom, prenom)
 			VALUES ('$topic', '$forum', '$uid','$time', '$poster_ip', '$nom', '$prenom')";
 	$result = db_query($sql, $currentCourseID);

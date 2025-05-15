@@ -100,57 +100,57 @@ if (!$myrow = mysql_fetch_array($result)) {
 	draw($tool_content, 2);
 	exit();
 }*/
-$mysqli = new mysqli(
-    $GLOBALS['mysqlServer'],
-    $GLOBALS['mysqlUser'],
-    $GLOBALS['mysqlPassword'],
-    $mysqlMainDb
-);
 
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+// Check for SQLi
+$mysqli = mysql_connect($GLOBALS['mysqlServer'], $GLOBALS['mysqlUser'], $GLOBALS['mysqlPassword']);
+if (!$mysqli) {
+    die("Database connection failed: " . mysql_error());
 }
+
+if (!mysql_select_db($mysqlMainDb, $mysqli)) {
+    die("Database selection failed: " . mysql_error());
+}
+
 
 $forum = intval($forum);
 $topic = intval($topic);
 
-$stmt1 = $mysqli->prepare("
-	SELECT f.forum_type, f.forum_name
-	FROM forums f
-	JOIN topics t ON t.forum_id = f.forum_id
-	WHERE f.forum_id = ? AND t.topic_id = ?
-");
 
-$stmt1->bind_param('ii',$forum, $topic);
-$stmt1->execute();
-$r1 = $stmt1->get_result();
+$forum_sql = "
+    SELECT f.forum_type, f.forum_name
+    FROM forums f
+    JOIN topics t ON t.forum_id = f.forum_id
+    WHERE f.forum_id = $forum AND t.topic_id = $topic
+";
 
-if (!$myrow = mysqli_fetch_array($result)) {
-	$tool_content .= $langErrorTopicSelect;
-	draw($tool_content, 2);
-	exit();
+$forum_result = mysql_query($forum_sql, $mysqli);
+if (!$forum_result || mysql_num_rows($forum_result) === 0) {
+    $tool_content .= $langErrorTopicSelect;
+    draw($tool_content, 2);
+    exit();
 }
 
+$myrow = mysql_fetch_assoc($forum_result);
 $forum_name = own_stripslashes($myrow["forum_name"]);
 
-//$sql = "SELECT topic_title, topic_status
-//	FROM topics 
-//	WHERE topic_id = '$topic'";
-//
-//$total = get_total_posts($topic, $currentCourseID, "topic");
 
+$topic_sql = "
+    SELECT topic_title, topic_status 
+    FROM topics 
+    WHERE topic_id = $topic
+";
 
-$stmt2 = $mysqli->prepare("
-	SELECT topic_title, topic_status 
-	FROM topics 
-	WHERE topic_id = ?");
-$stmt2 = bind_param('i', $topic);
-$stmt2-> execute();
-$r2 = $stmt2->get_result();
+$topic_result = mysql_query($topic_sql, $mysqli);
+if ($topic_result && mysql_num_rows($topic_result) > 0) {
+    $myrow = mysql_fetch_assoc($topic_result);
+    $topic_subject = own_stripslashes($myrow["topic_title"]);
+    $lock_state = $myrow["topic_status"];
+} else {
+    // Handle error if topic is not found
+    $topic_subject = '';
+    $lock_state = 0;
+}
 
-$myrow = $r2->fetch_assoc();
-$topic_subject = own_stripslashes($myrow["topic_title"]);
-$lock_state = $myrow["topic_status"];
 
 
 if ($paging and $total > $posts_per_page) {
