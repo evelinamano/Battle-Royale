@@ -1,4 +1,4 @@
-<?
+<?php
 /*========================================================================
 *   Open eClass 2.3
 *   E-learning and Course Management System
@@ -76,10 +76,6 @@ if (!$doit) {
                 <li>$langNo: <a href=\"edituser.php?u=".htmlspecialchars($u)."\">$langBack</a></li>
                 </ul>";
 } else {
-        // Validate the CSRF token
-	if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die("CSRF token validation failed.");
-        }
         if (!$c) {
                 if ($u == 1) {
                         $tool_content .= $langTryDeleteAdmin;
